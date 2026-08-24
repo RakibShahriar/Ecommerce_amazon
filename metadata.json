@@ -1,0 +1,6 @@
+{
+  "name": "Amazon Clone",
+  "description": "An interactive educational replica of Amazon featuring live product search, category browsing, product detail view, full shopping cart, wishlist, and checkout simulation.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
