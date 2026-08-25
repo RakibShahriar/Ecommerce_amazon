@@ -61,44 +61,8 @@ export const Header: React.FC = () => {
       {/* Top Header Row */}
       <div className="max-w-[1500px] mx-auto px-2 sm:px-4 py-2 flex items-center justify-between gap-2 md:gap-4">
         
-        {/* Amazon Logo */}
-        <button
-          id="amazon-logo-btn"
-          onClick={() => {
-            setActiveView('home');
-            setSelectedProductId(null);
-          }}
-          className="flex items-center p-1.5 rounded-sm hover:ring-1 hover:ring-white transition group focus:outline-none flex-shrink-0"
-          title="Amazon Home"
-        >
-          <div className="flex flex-col items-start leading-none relative">
-            <div className="flex items-baseline font-black tracking-tight text-xl text-white">
-              <span>amazon</span>
-              <span className="text-[#febd69] text-xs font-semibold ml-0.5">.com</span>
-            </div>
-            {/* Amazon Smile Arc */}
-            <svg
-              className="w-16 h-3 text-[#ff9900] -mt-1"
-              viewBox="0 0 100 20"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                d="M 5 6 Q 50 22 95 6"
-                stroke="currentColor"
-                strokeWidth="3.5"
-                strokeLinecap="round"
-              />
-              <path
-                d="M 86 10 L 96 6 L 93 15"
-                stroke="currentColor"
-                strokeWidth="3.5"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
-            </svg>
-          </div>
-        </button>
+        {/* SOA Logo */}
+        <button id="soa-logo-btn" onClick={() => { setSelectedProductId(null); setActiveView('home'); }} className="flex items-center gap-2.5 p-1 rounded hover:ring-1 hover:ring-white transition group focus:outline-none flex-shrink-0" title="SOA TRACEABLE FOODS Home"><img src="/assets/logo.png" alt="SOA TRACEABLE FOODS Icon" className="h-9 w-9 md:h-10 md:w-10 object-contain rounded-xl shadow-md transition group-hover:scale-105" /><div className="flex flex-col items-start text-left leading-tight"><span className="font-extrabold tracking-wider text-base md:text-lg text-white group-hover:text-amber-400 transition">SOA</span><span className="text-[10px] md:text-[11px] font-medium tracking-widest text-amber-200/90 uppercase">Traceable Foods</span></div></button>
 
         {/* Deliver To Pin */}
         <button
@@ -143,12 +107,12 @@ export const Header: React.FC = () => {
             {/* Input field */}
             <div className="relative flex-1 flex items-center h-full">
               <input
-                id="amazon-search-input"
+                id="soa-search-input"
                 type="text"
                 value={inputVal}
                 onChange={(e) => setInputVal(e.target.value)}
                 onFocus={() => setIsSearchFocused(true)}
-                placeholder="Search Amazon (e.g. মধু, বীজ ও পাউডার, চাল ও শস্য, তেল ও ঘি, মসলা...)"
+                placeholder="Search SOA (e.g. মধু, বীজ ও পাউডার, চাল ও শস্য, তেল ও ঘি, মসলা...)"
                 className="w-full h-full px-3 text-sm text-gray-900 bg-white placeholder-gray-500 focus:outline-none"
               />
               {inputVal && (
@@ -180,7 +144,7 @@ export const Header: React.FC = () => {
           {isSearchFocused && (
             <div className="absolute top-11 left-0 right-0 bg-white text-gray-900 rounded-b-md shadow-2xl border border-gray-200 z-50 overflow-hidden animate-in fade-in duration-100">
               <div className="p-2 border-b border-gray-100 bg-gray-50 flex items-center justify-between text-xs text-gray-500">
-                <span>{inputVal ? 'Search suggestions' : 'Trending on Amazon'}</span>
+                <span>{inputVal ? 'Search suggestions' : 'Trending on SOA'}</span>
                 <span className="text-[11px] text-gray-400">Press Enter to search</span>
               </div>
               <ul className="py-1 max-h-72 overflow-y-auto">

@@ -66,15 +66,15 @@ export const ProductCard: React.FC<ProductCardProps> = ({
           loading="lazy"
         />
 
-        {/* Amazon's Choice / Best Seller Pill */}
+        {/* SOA's Choice / Best Seller Pill */}
         {product.bestSeller && (
           <div className="absolute top-0 left-0 bg-[#e67a00] text-white text-[10px] font-bold px-2 py-0.5 rounded-br uppercase tracking-tight shadow-sm">
             #1 Best Seller
           </div>
         )}
-        {product.amazonsChoice && !product.bestSeller && (
+        {product.soasChoice && !product.bestSeller && (
           <div className="absolute top-0 left-0 bg-[#232f3e] text-white text-[10px] font-medium px-2 py-0.5 rounded-br flex items-center gap-1 shadow-sm">
-            <span className="text-white">Amazon's</span>
+            <span className="text-white">SOA's</span>
             <span className="text-[#f90] font-bold">Choice</span>
           </div>
         )}

@@ -25,36 +25,36 @@ export const Footer: React.FC = () => {
           <h3 className="font-bold text-sm text-white mb-3">Get to Know Us</h3>
           <ul className="space-y-2 text-gray-300 text-xs">
             <li className="hover:underline cursor-pointer">Careers</li>
-            <li className="hover:underline cursor-pointer">Amazon Newsletter</li>
-            <li className="hover:underline cursor-pointer">About Amazon</li>
+            <li className="hover:underline cursor-pointer">SOA Newsletter</li>
+            <li className="hover:underline cursor-pointer">About SOA</li>
             <li className="hover:underline cursor-pointer">Accessibility</li>
             <li className="hover:underline cursor-pointer">Sustainability</li>
-            <li className="hover:underline cursor-pointer">Amazon Devices</li>
-            <li className="hover:underline cursor-pointer">Amazon Science</li>
+            <li className="hover:underline cursor-pointer">SOA Devices</li>
+            <li className="hover:underline cursor-pointer">SOA Science</li>
           </ul>
         </div>
 
         <div>
           <h3 className="font-bold text-sm text-white mb-3">Make Money with Us</h3>
           <ul className="space-y-2 text-gray-300 text-xs">
-            <li className="hover:underline cursor-pointer">Sell products on Amazon</li>
-            <li className="hover:underline cursor-pointer">Sell on Amazon Business</li>
-            <li className="hover:underline cursor-pointer">Sell apps on Amazon</li>
+            <li className="hover:underline cursor-pointer">Sell products on SOA</li>
+            <li className="hover:underline cursor-pointer">Sell on SOA Business</li>
+            <li className="hover:underline cursor-pointer">Sell apps on SOA</li>
             <li className="hover:underline cursor-pointer">Become an Affiliate</li>
             <li className="hover:underline cursor-pointer">Advertise Your Products</li>
             <li className="hover:underline cursor-pointer">Self-Publish with Us</li>
-            <li className="hover:underline cursor-pointer">Host an Amazon Hub</li>
+            <li className="hover:underline cursor-pointer">Host an SOA Hub</li>
           </ul>
         </div>
 
         <div>
-          <h3 className="font-bold text-sm text-white mb-3">Amazon Payment Products</h3>
+          <h3 className="font-bold text-sm text-white mb-3">SOA Payment Products</h3>
           <ul className="space-y-2 text-gray-300 text-xs">
-            <li className="hover:underline cursor-pointer">Amazon Prime Rewards Visa</li>
-            <li className="hover:underline cursor-pointer">Amazon Store Card</li>
+            <li className="hover:underline cursor-pointer">SOA Prime Rewards Visa</li>
+            <li className="hover:underline cursor-pointer">SOA Store Card</li>
             <li className="hover:underline cursor-pointer">Shop with Points</li>
             <li className="hover:underline cursor-pointer">Reload Your Balance</li>
-            <li className="hover:underline cursor-pointer">Amazon Currency Converter</li>
+            <li className="hover:underline cursor-pointer">SOA Currency Converter</li>
           </ul>
         </div>
 
@@ -83,17 +83,7 @@ export const Footer: React.FC = () => {
       <div className="border-t border-[#3a4553] py-6">
         <div className="max-w-4xl mx-auto px-4 flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-8">
           {/* Logo */}
-          <button
-            onClick={() => {
-              setActiveView('home');
-              setSelectedProductId(null);
-              scrollToTop();
-            }}
-            className="flex items-center"
-          >
-            <span className="font-black text-xl text-white tracking-tight">amazon</span>
-            <span className="text-[#febd69] text-xs font-bold ml-0.5">.com</span>
-          </button>
+          <button onClick={() => { setActiveView('home'); setSelectedProductId(null); scrollToTop(); }} className="flex items-center gap-2.5 p-1 rounded hover:opacity-90 transition group"><img src="/assets/logo.png" alt="SOA TRACEABLE FOODS Icon" className="h-9 w-9 object-contain rounded-xl shadow-sm group-hover:scale-105 transition" /><div className="flex flex-col items-start text-left leading-tight"><span className="font-extrabold tracking-wider text-lg text-white group-hover:text-amber-400 transition">SOA</span><span className="text-[11px] font-medium tracking-widest text-amber-200/90 uppercase">Traceable Foods</span></div></button>
 
           <div className="flex items-center gap-3 text-xs">
             <div className="border border-gray-500 rounded px-3 py-1.5 flex items-center gap-1.5 hover:border-white cursor-pointer">
@@ -115,11 +105,11 @@ export const Footer: React.FC = () => {
       <div className="bg-[#131a22] py-8 text-[11px] text-gray-400">
         <div className="max-w-6xl mx-auto px-4 grid grid-cols-2 sm:grid-cols-4 gap-6 pb-6 border-b border-gray-800">
           <div>
-            <h4 className="text-gray-200 font-bold">Amazon Music</h4>
+            <h4 className="text-gray-200 font-bold">SOA Music</h4>
             <p className="text-gray-400">Stream millions of songs</p>
           </div>
           <div>
-            <h4 className="text-gray-200 font-bold">Amazon Web Services</h4>
+            <h4 className="text-gray-200 font-bold">SOA Web Services</h4>
             <p className="text-gray-400">Scalable Cloud Computing Services</p>
           </div>
           <div>
@@ -140,7 +130,7 @@ export const Footer: React.FC = () => {
             <span className="hover:underline cursor-pointer">Your Ads Privacy Choices</span>
           </div>
           <p className="text-gray-400">
-            &copy; 1996-{new Date().getFullYear()}, Amazon.com, Inc. or its affiliates. (Interactive Educational Prototype)
+            &copy; 1996-{new Date().getFullYear()}, SOA, Inc. or its affiliates. (Interactive Educational Prototype)
           </p>
         </div>
       </div>

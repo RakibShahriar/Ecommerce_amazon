@@ -42,7 +42,7 @@ export const HeroBanner: React.FC = () => {
         {/* Ambient Overlay & Gradient */}
         <div className={`absolute inset-0 bg-gradient-to-r ${slide.bgGradient} opacity-75`} />
 
-        {/* Amazon Signature Bottom Fade into #eaeded */}
+        {/* SOA Signature Bottom Fade into #eaeded */}
         <div className="absolute inset-x-0 bottom-0 h-44 md:h-64 bg-gradient-to-t from-[#eaeded] via-[#eaeded]/80 to-transparent pointer-events-none" />
 
         {/* Banner Copy & Call to Action */}

@@ -189,7 +189,7 @@ export const OrdersHistoryModal: React.FC = () => {
                             {item.product.title}
                           </h4>
                           <p className="text-gray-500 text-[11px] mt-0.5">
-                            Sold by: {item.product.soldBy || 'Amazon.com'} &bull; Return window closed
+                            Sold by: {item.product.soldBy || 'SOA'} &bull; Return window closed
                           </p>
                         </div>
                       </div>

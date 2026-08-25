@@ -35,7 +35,7 @@ export interface Product {
   galleryImages: string[];
   prime: boolean;
   bestSeller?: boolean;
-  amazonsChoice?: boolean;
+  soasChoice?: boolean;
   dealBadge?: string;
   dealDiscountPercent?: number;
   stock: number;

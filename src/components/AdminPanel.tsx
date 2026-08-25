@@ -52,7 +52,7 @@ export const AdminPanel: React.FC = () => {
   // New Product Form State
   const [newProd, setNewProd] = useState<Partial<Product>>({
     title: '',
-    brand: 'Amazon Brand',
+    brand: 'SOA Brand',
     category: 'Electronics',
     department: 'Electronics',
     price: 49.99,
@@ -60,10 +60,10 @@ export const AdminPanel: React.FC = () => {
     stock: 25,
     image: 'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=800&auto=format&fit=crop&q=80',
     description: 'Premium quality electronics device designed for ultimate performance and reliability.',
-    bulletPoints: ['High durability', '1-year warranty included', 'Amazon Prime fast shipping'],
+    bulletPoints: ['High durability', '1-year warranty included', 'SOA Prime fast shipping'],
     prime: true,
     bestSeller: false,
-    amazonsChoice: false
+    soasChoice: false
   });
 
   // Calculate Dashboard Metrics
@@ -102,7 +102,7 @@ export const AdminPanel: React.FC = () => {
     addProduct({
       asin: `B0${Math.floor(10000000 + Math.random() * 90000000)}`,
       title: newProd.title || 'Untitled Product',
-      brand: newProd.brand || 'Amazon Basics',
+      brand: newProd.brand || 'SOA Basics',
       category: newProd.category || 'General',
       department: newProd.department || newProd.category || 'General',
       price: Number(newProd.price),
@@ -113,19 +113,19 @@ export const AdminPanel: React.FC = () => {
       galleryImages: [newProd.image || 'https://images.unsplash.com/photo-1526170375885-4d8ecf77b99f?w=800&auto=format&fit=crop&q=80'],
       prime: !!newProd.prime,
       bestSeller: !!newProd.bestSeller,
-      amazonsChoice: !!newProd.amazonsChoice,
+      soasChoice: !!newProd.soasChoice,
       stock: Number(newProd.stock || 10),
       stockStatus: Number(newProd.stock || 10) <= 0 ? 'out_of_stock' : Number(newProd.stock || 10) < 10 ? 'low_stock' : 'in_stock',
-      description: newProd.description || 'Quality product available on Amazon Clone.',
+      description: newProd.description || 'Quality product available on SOA Clone.',
       bulletPoints: newProd.bulletPoints || ['Premium quality build', 'Ships quickly with Prime'],
-      specs: { Brand: newProd.brand || 'Amazon Basics', Category: newProd.category || 'General' }
+      specs: { Brand: newProd.brand || 'SOA Basics', Category: newProd.category || 'General' }
     });
 
     setIsAddModalOpen(false);
     // Reset form
     setNewProd({
       title: '',
-      brand: 'Amazon Brand',
+      brand: 'SOA Brand',
       category: 'Electronics',
       department: 'Electronics',
       price: 49.99,
@@ -152,7 +152,7 @@ export const AdminPanel: React.FC = () => {
       image: editingProduct.image,
       prime: editingProduct.prime,
       bestSeller: editingProduct.bestSeller,
-      amazonsChoice: editingProduct.amazonsChoice
+      soasChoice: editingProduct.soasChoice
     });
 
     setEditingProduct(null);
@@ -164,13 +164,7 @@ export const AdminPanel: React.FC = () => {
       <header className="bg-[#131921] text-white border-b border-gray-800 shadow-md">
         <div className="max-w-7xl mx-auto px-4 py-4 flex flex-wrap items-center justify-between gap-4">
           <div className="flex items-center gap-3">
-            <div className="bg-[#febd69] text-[#131921] p-2 rounded-lg font-black tracking-wider text-lg flex items-center gap-1.5 shadow">
-              <Box className="w-5 h-5" />
-              <span>amazon</span>
-              <span className="text-xs font-semibold uppercase tracking-widest text-[#232f3e] bg-amber-200/80 px-1.5 py-0.5 rounded">
-                Seller Central
-              </span>
-            </div>
+            <div className="flex items-center gap-2.5"><img src="/assets/logo.png" alt="SOA TRACEABLE FOODS Icon" className="h-9 w-9 object-contain rounded-xl shadow-sm" /><div className="flex items-center gap-2"><span className="font-black text-base text-white tracking-wider">SOA TRACEABLE FOODS</span><span className="text-xs font-semibold uppercase tracking-widest text-[#232f3e] bg-amber-200/90 px-1.5 py-0.5 rounded">Seller Central</span></div></div>
             <div>
               <h1 className="text-lg font-bold text-white flex items-center gap-2">
                 Merchant Admin Control Center
@@ -389,7 +383,7 @@ export const AdminPanel: React.FC = () => {
                 <div className="pt-2 border-t border-gray-100">
                   <div className="bg-gray-50 p-3 rounded-lg text-[11px] text-gray-600 space-y-1 border border-gray-200">
                     <p className="font-semibold text-gray-800 flex items-center gap-1.5">
-                      <CheckCircle className="w-3.5 h-3.5 text-emerald-500" /> Amazon Fulfillment Network Active
+                      <CheckCircle className="w-3.5 h-3.5 text-emerald-500" /> SOA Fulfillment Network Active
                     </p>
                     <p>Local state synced automatically across storefront views.</p>
                   </div>
@@ -547,9 +541,9 @@ export const AdminPanel: React.FC = () => {
                                   Best Seller
                                 </span>
                               )}
-                              {product.amazonsChoice && (
+                              {product.soasChoice && (
                                 <span className="bg-[#232f3e] text-amber-400 font-bold text-[9px] px-1.5 py-0.5 rounded">
-                                  Amazon's Choice
+                                  SOA's Choice
                                 </span>
                               )}
                             </div>
@@ -762,7 +756,7 @@ export const AdminPanel: React.FC = () => {
             <div className="flex items-center justify-between border-b pb-3">
               <h3 className="text-lg font-bold text-gray-900 flex items-center gap-2">
                 <Plus className="w-5 h-5 text-amber-500" />
-                Create New Amazon Product Listing
+                Create New SOA Product Listing
               </h3>
               <button
                 onClick={() => setIsAddModalOpen(false)}
@@ -869,7 +863,7 @@ export const AdminPanel: React.FC = () => {
                     onChange={(e) => setNewProd({ ...newProd, prime: e.target.checked })}
                     className="w-4 h-4 text-amber-500 rounded focus:ring-amber-400"
                   />
-                  <span>Amazon Prime Eligible</span>
+                  <span>SOA Prime Eligible</span>
                 </label>
                 <label className="flex items-center gap-2 cursor-pointer font-semibold">
                   <input

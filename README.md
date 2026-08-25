@@ -1,6 +1,6 @@
-# Amazon E-Commerce Platform & Seller Central Admin
+# SOA E-Commerce Platform & Seller Central Admin
 
-An interactive, high-performance E-Commerce web application built with **React 19**, **TypeScript**, **Vite 6**, and **Tailwind CSS 4**. This platform replicates Amazon's customer storefront while introducing a dedicated **Merchant Seller Central** dashboard for catalog management, stock monitoring, and order fulfillment.
+An interactive, high-performance E-Commerce web application built with **React 19**, **TypeScript**, **Vite 6**, and **Tailwind CSS 4**. This platform replicates SOA's customer storefront while introducing a dedicated **Merchant Seller Central** dashboard for catalog management, stock monitoring, and order fulfillment.
 
 ---
 

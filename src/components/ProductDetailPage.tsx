@@ -179,9 +179,9 @@ export const ProductDetailPage: React.FC = () => {
                 #1 Best Seller in {p.category}
               </div>
             )}
-            {p.amazonsChoice && !p.bestSeller && (
+            {p.soasChoice && !p.bestSeller && (
               <div className="bg-[#232f3e] text-white text-xs font-medium px-2.5 py-0.5 rounded flex items-center gap-1 shadow-sm">
-                <span>Amazon's</span>
+                <span>SOA's</span>
                 <span className="text-[#f90] font-bold">Choice</span>
               </div>
             )}
@@ -268,7 +268,7 @@ export const ProductDetailPage: React.FC = () => {
           )}
         </div>
 
-        {/* Right Column: Sticky Amazon Buy Box (3 cols on lg) */}
+        {/* Right Column: Sticky SOA Buy Box (3 cols on lg) */}
         <div className="lg:col-span-3">
           <div className="bg-white rounded-lg border border-gray-300 p-4 shadow-sm space-y-3.5 sticky top-20 text-xs">
             {/* Price in Buy Box */}
@@ -352,9 +352,9 @@ export const ProductDetailPage: React.FC = () => {
               </div>
               <div className="grid grid-cols-2 gap-1 pt-1">
                 <span className="text-gray-500">Ships from</span>
-                <span className="font-semibold text-gray-800">{p.shipsFrom || 'Amazon.com'}</span>
+                <span className="font-semibold text-gray-800">{p.shipsFrom || 'SOA'}</span>
                 <span className="text-gray-500">Sold by</span>
-                <span className="font-semibold text-gray-800">{p.soldBy || 'Amazon.com'}</span>
+                <span className="font-semibold text-gray-800">{p.soldBy || 'SOA'}</span>
                 <span className="text-gray-500">Returns</span>
                 <span className="font-semibold text-[#007185]">30-day refund/replacement</span>
               </div>
@@ -483,7 +483,7 @@ export const ProductDetailPage: React.FC = () => {
               ))
             ) : (
               <p className="text-xs text-gray-500 italic">
-                Showing verified customer experiences for {p.title}. All ratings verified by Amazon.
+                Showing verified customer experiences for {p.title}. All ratings verified by SOA.
               </p>
             )}
           </div>

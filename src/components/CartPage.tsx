@@ -91,7 +91,7 @@ export const CartPage: React.FC = () => {
               <div className="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center mx-auto text-gray-400">
                 <ShoppingBag className="w-8 h-8" />
               </div>
-              <h2 className="text-xl font-bold text-gray-800">Your Amazon Cart is empty</h2>
+              <h2 className="text-xl font-bold text-gray-800">Your SOA Cart is empty</h2>
               <p className="text-xs text-gray-500 max-w-sm mx-auto">
                 Check out Today's Deals or search for items to add to your cart.
               </p>

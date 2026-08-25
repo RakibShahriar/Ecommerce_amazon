@@ -115,11 +115,11 @@ export const SideNavDrawer: React.FC = () => {
                 <ChevronRight className="w-4 h-4 text-gray-400" />
               </li>
               <li className="px-6 py-2.5 hover:bg-gray-100 cursor-pointer flex justify-between font-medium">
-                <span>Amazon Prime Membership</span>
+                <span>SOA Prime Membership</span>
                 <ChevronRight className="w-4 h-4 text-gray-400" />
               </li>
               <li className="px-6 py-2.5 hover:bg-gray-100 cursor-pointer flex justify-between font-medium">
-                <span>Amazon Live Shopping</span>
+                <span>SOA Live Shopping</span>
                 <ChevronRight className="w-4 h-4 text-gray-400" />
               </li>
             </ul>

@@ -100,7 +100,7 @@ const DEFAULT_PAYMENT: PaymentMethod = {
   id: 'pm-1',
   type: 'prime_card',
   last4: '4242',
-  brand: 'Amazon Prime Rewards Visa',
+  brand: 'SOA Prime Rewards Visa',
   expiryMonth: '08',
   expiryYear: '29',
   holderName: 'Alex Johnson',
@@ -111,7 +111,7 @@ const ShopContext = createContext<ShopContextType | undefined>(undefined);
 export const ShopProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [products, setProducts] = useState<Product[]>(() => {
     try {
-      const saved = localStorage.getItem('amazon_clone_products');
+      const saved = localStorage.getItem('soa_products');
       if (saved) {
         const parsed = JSON.parse(saved);
         if (
@@ -131,7 +131,7 @@ export const ShopProvider: React.FC<{ children: React.ReactNode }> = ({ children
   // Cart state stored locally
   const [cart, setCart] = useState<CartItem[]>(() => {
     try {
-      const saved = localStorage.getItem('amazon_clone_cart');
+      const saved = localStorage.getItem('soa_cart');
       if (saved) return JSON.parse(saved);
     } catch {
       // fallback
@@ -155,7 +155,7 @@ export const ShopProvider: React.FC<{ children: React.ReactNode }> = ({ children
   // Wishlist state
   const [wishlist, setWishlist] = useState<string[]>(() => {
     try {
-      const saved = localStorage.getItem('amazon_clone_wishlist');
+      const saved = localStorage.getItem('soa_wishlist');
       if (saved) return JSON.parse(saved);
     } catch {
       // fallback
@@ -166,7 +166,7 @@ export const ShopProvider: React.FC<{ children: React.ReactNode }> = ({ children
   // Orders state
   const [orders, setOrders] = useState<Order[]>(() => {
     try {
-      const saved = localStorage.getItem('amazon_clone_orders');
+      const saved = localStorage.getItem('soa_orders');
       if (saved) return JSON.parse(saved);
     } catch {
       // fallback
@@ -200,8 +200,8 @@ export const ShopProvider: React.FC<{ children: React.ReactNode }> = ({ children
         status: 'delivered',
         trackingSteps: [
           { title: 'Ordered', description: 'Order placed securely', date: 'Aug 10, 2:15 PM', completed: true, current: false },
-          { title: 'Shipped', description: 'Package departed Amazon fulfillment center', date: 'Aug 11, 4:00 AM', completed: true, current: false },
-          { title: 'Out for delivery', description: 'With Amazon delivery driver', date: 'Aug 12, 8:30 AM', completed: true, current: false },
+          { title: 'Shipped', description: 'Package departed SOA fulfillment center', date: 'Aug 11, 4:00 AM', completed: true, current: false },
+          { title: 'Out for delivery', description: 'With SOA delivery driver', date: 'Aug 12, 8:30 AM', completed: true, current: false },
           { title: 'Delivered', description: 'Delivered to front door', date: 'Aug 12, 1:45 PM', completed: true, current: true }
         ]
       }
@@ -220,25 +220,25 @@ export const ShopProvider: React.FC<{ children: React.ReactNode }> = ({ children
   // Sync to local storage
   useEffect(() => {
     try {
-      localStorage.setItem('amazon_clone_cart', JSON.stringify(cart));
+      localStorage.setItem('soa_cart', JSON.stringify(cart));
     } catch {}
   }, [cart]);
 
   useEffect(() => {
     try {
-      localStorage.setItem('amazon_clone_wishlist', JSON.stringify(wishlist));
+      localStorage.setItem('soa_wishlist', JSON.stringify(wishlist));
     } catch {}
   }, [wishlist]);
 
   useEffect(() => {
     try {
-      localStorage.setItem('amazon_clone_orders', JSON.stringify(orders));
+      localStorage.setItem('soa_orders', JSON.stringify(orders));
     } catch {}
   }, [orders]);
 
   useEffect(() => {
     try {
-      localStorage.setItem('amazon_clone_products', JSON.stringify(products));
+      localStorage.setItem('soa_products', JSON.stringify(products));
     } catch {}
   }, [products]);
 
@@ -411,7 +411,7 @@ export const ShopProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const cartSubtotal = checkoutItems.reduce((acc, item) => acc + item.product.price * item.quantity, 0);
   const freeShippingThreshold = 35.0;
   const amountNeededForFreeShipping = Math.max(0, freeShippingThreshold - cartSubtotal);
-  const hasPrimeDelivery = true; // Amazon Prime simulator
+  const hasPrimeDelivery = true; // SOA Prime simulator
 
   // Wishlist
   const toggleWishlist = (productId: string) => {
@@ -543,7 +543,7 @@ export const ShopProvider: React.FC<{ children: React.ReactNode }> = ({ children
       status: 'ordered',
       trackingSteps: [
         { title: 'Ordered', description: 'Order confirmed and verified', date: 'Just now', completed: true, current: true },
-        { title: 'Shipped', description: 'Preparing dispatch at local Amazon warehouse', date: 'Pending', completed: false, current: false },
+        { title: 'Shipped', description: 'Preparing dispatch at local SOA warehouse', date: 'Pending', completed: false, current: false },
         { title: 'Out for delivery', description: 'Courier will deliver to your doorstep', date: 'Pending', completed: false, current: false },
         { title: 'Delivered', description: 'Signature or photo confirmation', date: 'Pending', completed: false, current: false },
       ]

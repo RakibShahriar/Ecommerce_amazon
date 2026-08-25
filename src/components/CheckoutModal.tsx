@@ -64,7 +64,7 @@ export const CheckoutModal: React.FC = () => {
           <div className="flex items-center justify-between border-b border-gray-200 pb-3">
             <div>
               <h2 className="text-lg font-bold text-gray-900">Package Tracking</h2>
-              <p className="text-xs text-gray-500">Shipped with Amazon Logistics</p>
+              <p className="text-xs text-gray-500">Shipped with SOA Logistics</p>
             </div>
             <span className="px-3 py-1 bg-amber-100 text-amber-800 font-bold text-xs rounded-full">
               Ordered
@@ -144,10 +144,7 @@ export const CheckoutModal: React.FC = () => {
           <ArrowLeft className="w-4 h-4" /> Back to Cart
         </button>
         <div className="flex items-center gap-2">
-          <div className="flex items-baseline font-black tracking-tight text-xl text-gray-900">
-            <span>amazon</span>
-            <span className="text-[#febd69] text-xs font-semibold ml-0.5">.com</span>
-          </div>
+          <div className="flex items-center gap-2 cursor-pointer" onClick={() => setActiveView('home')}><img src="/assets/logo.png" alt="SOA TRACEABLE FOODS Icon" className="h-8 w-8 object-contain rounded-lg shadow-sm" /><div className="flex flex-col leading-none"><span className="font-black text-base text-gray-900 tracking-wider">SOA</span><span className="text-[9px] font-bold tracking-widest text-amber-800 uppercase">TRACEABLE FOODS</span></div></div>
           <span className="text-lg font-light text-gray-400">|</span>
           <span className="text-base font-bold text-gray-700">Checkout</span>
         </div>
@@ -287,7 +284,7 @@ export const CheckoutModal: React.FC = () => {
                 Payment method
               </h2>
               <span className="text-xs text-green-700 font-bold flex items-center gap-1">
-                <ShieldCheck className="w-4 h-4" /> Amazon Prime Rewards Active
+                <ShieldCheck className="w-4 h-4" /> SOA Prime Rewards Active
               </span>
             </div>
 
@@ -302,7 +299,7 @@ export const CheckoutModal: React.FC = () => {
                       id: 'pm-1',
                       type: 'prime_card',
                       last4: '4242',
-                      brand: 'Amazon Prime Rewards Visa',
+                      brand: 'SOA Prime Rewards Visa',
                       expiryMonth: '08',
                       expiryYear: '29',
                       holderName: 'Alex Johnson',
@@ -313,7 +310,7 @@ export const CheckoutModal: React.FC = () => {
                 <div className="flex-1 flex items-center justify-between">
                   <div>
                     <p className="font-bold text-gray-900">
-                      Amazon Prime Rewards Visa Signature ending in 4242
+                      SOA Prime Rewards Visa Signature ending in 4242
                     </p>
                     <p className="text-gray-500 text-[11px]">Earn 5% back on this order</p>
                   </div>
@@ -331,7 +328,7 @@ export const CheckoutModal: React.FC = () => {
                       id: 'pm-2',
                       type: 'gift_card',
                       last4: '9821',
-                      brand: 'Amazon Gift Card Balance ($500.00)',
+                      brand: 'SOA Gift Card Balance ($500.00)',
                       expiryMonth: '12',
                       expiryYear: '30',
                       holderName: 'Alex Johnson',
@@ -340,7 +337,7 @@ export const CheckoutModal: React.FC = () => {
                   className="w-4 h-4 text-amber-600 focus:ring-amber-500"
                 />
                 <div>
-                  <p className="font-bold text-gray-900">Amazon Gift Card Balance</p>
+                  <p className="font-bold text-gray-900">SOA Gift Card Balance</p>
                   <p className="text-green-700 text-[11px] font-semibold">Available: $500.00</p>
                 </div>
               </label>
@@ -457,7 +454,7 @@ export const CheckoutModal: React.FC = () => {
           </button>
 
           <p className="text-[11px] text-gray-500 text-center leading-tight">
-            By placing your order, you agree to Amazon's <span className="text-[#007185] hover:underline cursor-pointer">privacy notice</span> and <span className="text-[#007185] hover:underline cursor-pointer">conditions of use</span>.
+            By placing your order, you agree to SOA's <span className="text-[#007185] hover:underline cursor-pointer">privacy notice</span> and <span className="text-[#007185] hover:underline cursor-pointer">conditions of use</span>.
           </p>
 
           <div className="pt-3 border-t border-gray-200 space-y-2">
