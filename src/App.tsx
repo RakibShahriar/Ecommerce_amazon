@@ -17,6 +17,7 @@ import { OrdersHistoryModal } from './components/OrdersHistoryModal';
 import { AdminPanel } from './components/AdminPanel';
 import { SideNavDrawer } from './components/SideNavDrawer';
 import { LocationModal } from './components/LocationModal';
+import { AuthModal } from './components/AuthModal';
 import { Footer } from './components/Footer';
 import { CheckCircle } from 'lucide-react';
 
@@ -62,6 +63,8 @@ const AppContent: React.FC = () => {
       {/* Modals & Overlays */}
       <SideNavDrawer />
       <LocationModal />
+      <AuthModal />
+
 
       {/* Global Footer */}
       <Footer />

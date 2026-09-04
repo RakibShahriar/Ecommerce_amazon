@@ -21,7 +21,14 @@ import {
   Filter,
   Eye,
   Tag,
-  ShieldAlert
+  ShieldAlert,
+  Users,
+  ShieldCheck,
+  Lock,
+  KeyRound,
+  UserCheck,
+  UserX,
+  LogOut
 } from 'lucide-react';
 
 export const AdminPanel: React.FC = () => {
@@ -34,10 +41,18 @@ export const AdminPanel: React.FC = () => {
     updateOrderStatus,
     setActiveView,
     setSelectedProductId,
-    showToast
+    showToast,
+    isAdminAuthenticated,
+    loginAdmin,
+    logoutAdmin,
+    usersList,
+    toggleUserStatus
   } = useShop();
 
-  const [activeTab, setActiveTab] = useState<'dashboard' | 'products' | 'orders' | 'analytics'>('dashboard');
+  const [activeTab, setActiveTab] = useState<'dashboard' | 'products' | 'users' | 'orders' | 'analytics'>('dashboard');
+  const [pinInput, setPinInput] = useState('');
+  const [lockError, setLockError] = useState('');
+
 
   // Filters & Search for Products Catalog
   const [productSearch, setProductSearch] = useState('');
@@ -158,89 +173,190 @@ export const AdminPanel: React.FC = () => {
     setEditingProduct(null);
   };
 
+  const handleLockSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    setLockError('');
+    const success = loginAdmin(pinInput);
+    if (!success) {
+      setLockError('Invalid Passkey or PIN. Try 1234 or admin123');
+    }
+  };
+
+  if (!isAdminAuthenticated) {
+    return (
+      <div className="min-h-screen bg-[#131921] text-white flex items-center justify-center p-4">
+        <div className="max-w-md w-full bg-[#1b222d] rounded-2xl shadow-2xl border border-amber-500/30 overflow-hidden p-8 space-y-6 animate-in fade-in duration-300">
+          <div className="text-center space-y-3">
+            <div className="w-16 h-16 bg-amber-500/10 rounded-2xl border border-amber-500/30 flex items-center justify-center mx-auto text-amber-400">
+              <Lock className="w-8 h-8" />
+            </div>
+            <h2 className="text-2xl font-black tracking-tight text-white">Merchant Seller Central</h2>
+            <p className="text-xs text-gray-400">
+              Protected Admin Portal. Server-side authentication passkey required to manage store inventory, orders, and user access.
+            </p>
+          </div>
+
+          <form onSubmit={handleLockSubmit} className="space-y-4">
+            {lockError && (
+              <div className="p-3 bg-red-500/10 border border-red-500/30 rounded-lg text-xs font-semibold text-red-400 text-center">
+                {lockError}
+              </div>
+            )}
+
+            <div>
+              <label className="block text-xs font-bold text-amber-300 mb-1.5 flex items-center justify-between">
+                <span>Enter Admin PIN or Passkey</span>
+                <span className="text-[11px] text-gray-400 font-normal">Default PIN: 1234</span>
+              </label>
+              <div className="relative">
+                <KeyRound className="w-4 h-4 text-amber-400 absolute left-3 top-3.5" />
+                <input
+                  type="password"
+                  value={pinInput}
+                  onChange={(e) => setPinInput(e.target.value)}
+                  placeholder="PIN / Passkey (1234)"
+                  className="w-full pl-9 pr-4 py-3 bg-[#131921] text-white placeholder-gray-500 border border-amber-500/40 rounded-xl focus:ring-2 focus:ring-amber-400 focus:outline-none font-mono text-sm"
+                />
+              </div>
+            </div>
+
+            <div className="flex items-center justify-between text-xs pt-1">
+              <button
+                type="button"
+                onClick={() => {
+                  setPinInput('1234');
+                  setLockError('');
+                }}
+                className="text-amber-400 font-bold hover:underline"
+              >
+                ⚡ Auto-fill Demo PIN (1234)
+              </button>
+              <button
+                type="button"
+                onClick={() => setActiveView('home')}
+                className="text-gray-400 hover:text-white"
+              >
+                Return to Store
+              </button>
+            </div>
+
+            <button
+              type="submit"
+              className="w-full py-3 bg-gradient-to-r from-amber-400 to-amber-500 hover:from-amber-500 hover:to-amber-600 text-gray-950 font-black rounded-xl shadow-lg transition flex items-center justify-center gap-2 text-sm"
+            >
+              <ShieldCheck className="w-4 h-4" /> Unlock Seller Central
+            </button>
+          </form>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="min-h-screen bg-[#f3f3f3] text-gray-900 pb-16 font-sans">
       {/* Top Seller Central Header Banner */}
       <header className="bg-[#131921] text-white border-b border-gray-800 shadow-md">
-        <div className="max-w-7xl mx-auto px-4 py-4 flex flex-wrap items-center justify-between gap-4">
-          <div className="flex items-center gap-3">
-            <div className="flex items-center gap-2.5"><img src="/assets/logo.png" alt="SOA TRACEABLE FOODS Icon" className="h-9 w-9 object-contain rounded-xl shadow-sm" /><div className="flex items-center gap-2"><span className="font-black text-base text-white tracking-wider">SOA TRACEABLE FOODS</span><span className="text-xs font-semibold uppercase tracking-widest text-[#232f3e] bg-amber-200/90 px-1.5 py-0.5 rounded">Seller Central</span></div></div>
+        <div className="max-w-7xl mx-auto px-3 sm:px-4 py-3 flex flex-col md:flex-row md:items-center justify-between gap-3">
+          <div className="flex items-center gap-2.5">
+            <img src="/assets/logo.png" alt="SOA Icon" className="h-8 w-8 sm:h-9 sm:w-9 object-contain rounded-lg shadow-sm flex-shrink-0" />
             <div>
-              <h1 className="text-lg font-bold text-white flex items-center gap-2">
-                Merchant Admin Control Center
-              </h1>
-              <p className="text-xs text-gray-400">Manage catalog, fulfillment, orders & store analytics</p>
+              <div className="flex items-center gap-1.5 flex-wrap">
+                <span className="font-black text-sm sm:text-base text-white tracking-wider">SOA TRACEABLE FOODS</span>
+                <span className="text-[9px] font-bold uppercase tracking-widest text-[#232f3e] bg-amber-200/90 px-1.5 py-0.5 rounded">Seller Central</span>
+              </div>
+              <p className="text-[10px] sm:text-xs text-gray-400">Manage catalog, inventory control & sales analytics</p>
             </div>
           </div>
 
-          <div className="flex items-center gap-3">
+          <div className="grid grid-cols-3 sm:flex sm:items-center gap-2 w-full md:w-auto">
             <button
               onClick={() => setActiveView('home')}
-              className="px-3.5 py-1.5 bg-[#232f3e] hover:bg-gray-700 text-white rounded text-xs font-medium border border-gray-600 transition flex items-center gap-1.5 shadow-sm"
+              className="px-2.5 py-1.5 bg-[#232f3e] hover:bg-gray-700 text-white rounded text-xs font-medium border border-gray-600 transition flex items-center justify-center gap-1 shadow-sm truncate"
             >
-              <ArrowUpRight className="w-3.5 h-3.5 text-amber-400" />
-              View Customer Storefront
+              <ArrowUpRight className="w-3.5 h-3.5 text-amber-400 flex-shrink-0" />
+              <span className="truncate">Storefront</span>
+            </button>
+            <button
+              onClick={logoutAdmin}
+              className="px-2.5 py-1.5 bg-rose-500/20 hover:bg-rose-500/30 text-rose-300 border border-rose-500/40 rounded text-xs font-bold transition flex items-center justify-center gap-1 shadow-sm truncate"
+              title="Lock Admin Panel"
+            >
+              <LogOut className="w-3.5 h-3.5 flex-shrink-0" />
+              <span className="truncate">Lock</span>
             </button>
             <button
               onClick={() => setIsAddModalOpen(true)}
-              className="px-4 py-1.5 bg-gradient-to-r from-amber-400 to-amber-500 hover:from-amber-500 hover:to-amber-600 text-[#131921] font-bold text-xs rounded shadow transition flex items-center gap-1.5"
+              className="px-2.5 py-1.5 bg-gradient-to-r from-amber-400 to-amber-500 hover:from-amber-500 hover:to-amber-600 text-[#131921] font-bold text-xs rounded shadow transition flex items-center justify-center gap-1 truncate"
             >
-              <Plus className="w-4 h-4" />
-              Add New Product
+              <Plus className="w-4 h-4 flex-shrink-0" />
+              <span className="truncate">Add Product</span>
             </button>
           </div>
         </div>
 
-        {/* Tab Navigation */}
+        {/* Tab Navigation Ribbon */}
         <div className="bg-[#232f3e] border-t border-gray-700/60">
-          <div className="max-w-7xl mx-auto px-4 flex gap-1 overflow-x-auto">
+          <div className="max-w-7xl mx-auto px-2 flex gap-1 overflow-x-auto scrollbar-none whitespace-nowrap">
             <button
               onClick={() => setActiveTab('dashboard')}
-              className={`px-4 py-3 text-xs font-semibold border-b-2 flex items-center gap-2 transition ${
+              className={`px-3.5 py-2.5 text-xs font-semibold border-b-2 flex items-center gap-1.5 transition flex-shrink-0 ${
                 activeTab === 'dashboard'
-                  ? 'border-amber-400 text-amber-400 bg-white/5'
+                  ? 'border-amber-400 text-amber-400 bg-white/5 font-bold'
                   : 'border-transparent text-gray-300 hover:text-white hover:bg-white/5'
               }`}
             >
-              <LayoutDashboard className="w-4 h-4" />
+              <LayoutDashboard className="w-4 h-4 flex-shrink-0" />
               Dashboard Overview
             </button>
             <button
               onClick={() => setActiveTab('products')}
-              className={`px-4 py-3 text-xs font-semibold border-b-2 flex items-center gap-2 transition ${
+              className={`px-3.5 py-2.5 text-xs font-semibold border-b-2 flex items-center gap-1.5 transition flex-shrink-0 ${
                 activeTab === 'products'
-                  ? 'border-amber-400 text-amber-400 bg-white/5'
+                  ? 'border-amber-400 text-amber-400 bg-white/5 font-bold'
                   : 'border-transparent text-gray-300 hover:text-white hover:bg-white/5'
               }`}
             >
-              <Package className="w-4 h-4" />
-              Product Catalog ({products.length})
+              <Package className="w-4 h-4 flex-shrink-0" />
+              Inventory & Catalog ({products.length})
+            </button>
+            <button
+              onClick={() => setActiveTab('users')}
+              className={`px-3.5 py-2.5 text-xs font-semibold border-b-2 flex items-center gap-1.5 transition flex-shrink-0 ${
+                activeTab === 'users'
+                  ? 'border-amber-400 text-amber-400 bg-white/5 font-bold'
+                  : 'border-transparent text-gray-300 hover:text-white hover:bg-white/5'
+              }`}
+            >
+              <Users className="w-4 h-4 flex-shrink-0" />
+              User Governance ({usersList.length})
             </button>
             <button
               onClick={() => setActiveTab('orders')}
-              className={`px-4 py-3 text-xs font-semibold border-b-2 flex items-center gap-2 transition ${
+              className={`px-3.5 py-2.5 text-xs font-semibold border-b-2 flex items-center gap-1.5 transition flex-shrink-0 ${
                 activeTab === 'orders'
-                  ? 'border-amber-400 text-amber-400 bg-white/5'
+                  ? 'border-amber-400 text-amber-400 bg-white/5 font-bold'
                   : 'border-transparent text-gray-300 hover:text-white hover:bg-white/5'
               }`}
             >
-              <ShoppingBag className="w-4 h-4" />
+              <ShoppingBag className="w-4 h-4 flex-shrink-0" />
               Orders Fulfillment ({orders.length})
             </button>
             <button
               onClick={() => setActiveTab('analytics')}
-              className={`px-4 py-3 text-xs font-semibold border-b-2 flex items-center gap-2 transition ${
+              className={`px-3.5 py-2.5 text-xs font-semibold border-b-2 flex items-center gap-1.5 transition flex-shrink-0 ${
                 activeTab === 'analytics'
-                  ? 'border-amber-400 text-amber-400 bg-white/5'
+                  ? 'border-amber-400 text-amber-400 bg-white/5 font-bold'
                   : 'border-transparent text-gray-300 hover:text-white hover:bg-white/5'
               }`}
             >
-              <TrendingUp className="w-4 h-4" />
-              Stock Alerts & Insights
+              <TrendingUp className="w-4 h-4 flex-shrink-0" />
+              Sales Analytics
             </button>
           </div>
         </div>
       </header>
+
+
 
       {/* Main Admin Content Container */}
       <main className="max-w-7xl mx-auto px-4 pt-6">
@@ -397,26 +513,25 @@ export const AdminPanel: React.FC = () => {
         {activeTab === 'products' && (
           <div className="space-y-4">
             {/* Filter and Action Header */}
-            <div className="bg-white p-4 rounded-xl shadow-sm border border-gray-200 flex flex-wrap items-center justify-between gap-4">
+            <div className="bg-white p-3.5 rounded-xl shadow-sm border border-gray-200 flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3">
               {/* Search Bar */}
-              <div className="relative flex-1 min-w-[260px]">
+              <div className="relative flex-1">
                 <Search className="w-4 h-4 text-gray-400 absolute left-3 top-1/2 -translate-y-1/2" />
                 <input
                   type="text"
                   placeholder="Search by title, brand, or ASIN..."
                   value={productSearch}
                   onChange={(e) => setProductSearch(e.target.value)}
-                  className="w-full pl-9 pr-4 py-2 border border-gray-300 rounded-lg text-xs focus:ring-2 focus:ring-amber-400 focus:border-amber-400 outline-none"
+                  className="w-full pl-9 pr-3 py-2 border border-gray-300 rounded-lg text-xs focus:ring-2 focus:ring-amber-400 outline-none"
                 />
               </div>
 
-              {/* Category Filter */}
-              <div className="flex items-center gap-2">
-                <Filter className="w-4 h-4 text-gray-500" />
+              {/* Category & Stock Filter Dropdowns */}
+              <div className="grid grid-cols-2 sm:flex items-center gap-2">
                 <select
                   value={categoryFilter}
                   onChange={(e) => setCategoryFilter(e.target.value)}
-                  className="border border-gray-300 rounded-lg px-3 py-2 text-xs focus:ring-2 focus:ring-amber-400 outline-none bg-white font-medium"
+                  className="border border-gray-300 rounded-lg px-2.5 py-2 text-xs focus:ring-2 focus:ring-amber-400 outline-none bg-white font-medium truncate"
                 >
                   <option value="all">All Categories ({products.length})</option>
                   {categories.map((c) => (
@@ -429,7 +544,7 @@ export const AdminPanel: React.FC = () => {
                 <select
                   value={stockFilter}
                   onChange={(e) => setStockFilter(e.target.value as any)}
-                  className="border border-gray-300 rounded-lg px-3 py-2 text-xs focus:ring-2 focus:ring-amber-400 outline-none bg-white font-medium"
+                  className="border border-gray-300 rounded-lg px-2.5 py-2 text-xs focus:ring-2 focus:ring-amber-400 outline-none bg-white font-medium truncate"
                 >
                   <option value="all">All Stock Statuses</option>
                   <option value="in_stock">In Stock (&ge;10)</option>
@@ -440,23 +555,24 @@ export const AdminPanel: React.FC = () => {
 
               <button
                 onClick={() => setIsAddModalOpen(true)}
-                className="px-4 py-2 bg-amber-500 hover:bg-amber-600 text-gray-900 font-bold text-xs rounded-lg shadow transition flex items-center gap-1.5 ml-auto"
+                className="px-3.5 py-2 bg-amber-500 hover:bg-amber-600 text-gray-950 font-bold text-xs rounded-lg shadow transition flex items-center justify-center gap-1.5 flex-shrink-0"
               >
                 <Plus className="w-4 h-4" />
                 Add Product
               </button>
             </div>
 
-            {/* Products Table */}
+            {/* Products Table with horizontal scroll wrapper */}
             <div className="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
-              <div className="overflow-x-auto">
-                <table className="w-full text-left border-collapse text-xs">
+              <div className="overflow-x-auto w-full">
+                <table className="w-full min-w-[650px] text-left border-collapse text-xs">
                   <thead>
                     <tr className="bg-[#232f3e] text-gray-200 uppercase font-semibold text-[11px] tracking-wider border-b border-gray-700">
                       <th className="py-3.5 px-4">Item & ASIN</th>
                       <th className="py-3.5 px-4">Category</th>
                       <th className="py-3.5 px-4">Price</th>
                       <th className="py-3.5 px-4">Stock Level</th>
+
                       <th className="py-3.5 px-4">Badges</th>
                       <th className="py-3.5 px-4 text-right">Actions</th>
                     </tr>
@@ -585,6 +701,118 @@ export const AdminPanel: React.FC = () => {
             </div>
           </div>
         )}
+
+        {/* ================= TAB 3: USER GOVERNANCE & ROLES ================= */}
+        {activeTab === 'users' && (
+          <div className="space-y-6">
+            <div className="bg-white p-4 rounded-xl shadow-sm border border-gray-200 flex items-center justify-between">
+              <div>
+                <h2 className="font-bold text-gray-900 text-sm flex items-center gap-2">
+                  <Users className="w-4 h-4 text-amber-600" /> User Accounts & Role Governance
+                </h2>
+                <p className="text-xs text-gray-500">Manage registered customers, merchant roles, and account security statuses</p>
+              </div>
+              <span className="bg-amber-100 text-amber-900 text-xs font-bold px-3 py-1 rounded-full">
+                {usersList.length} Registered Accounts
+              </span>
+            </div>
+
+            <div className="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
+              <div className="overflow-x-auto">
+                <table className="w-full text-left border-collapse text-xs">
+                  <thead>
+                    <tr className="bg-[#232f3e] text-gray-200 uppercase font-semibold text-[11px] tracking-wider border-b border-gray-700">
+                      <th className="py-3.5 px-4">User & Email</th>
+                      <th className="py-3.5 px-4">Role</th>
+                      <th className="py-3.5 px-4">Status</th>
+                      <th className="py-3.5 px-4">Joined Date</th>
+                      <th className="py-3.5 px-4">Orders & Lifetime Spent</th>
+                      <th className="py-3.5 px-4 text-right">Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody className="divide-y divide-gray-100">
+                    {usersList.map((usr) => (
+                      <tr key={usr.id} className="hover:bg-amber-50/40 transition">
+                        <td className="py-3.5 px-4">
+                          <div className="flex items-center gap-2.5">
+                            <div className="w-8 h-8 rounded-full bg-amber-100 text-amber-900 font-black flex items-center justify-center text-xs border border-amber-300">
+                              {usr.name.charAt(0).toUpperCase()}
+                            </div>
+                            <div>
+                              <p className="font-bold text-gray-900 flex items-center gap-1.5">
+                                <span>{usr.name}</span>
+                                {usr.primeMember && (
+                                  <span className="bg-blue-600 text-white font-black text-[9px] px-1 py-0.2 rounded">
+                                    PRIME
+                                  </span>
+                                )}
+                              </p>
+                              <p className="text-gray-500 text-[11px]">{usr.email}</p>
+                            </div>
+                          </div>
+                        </td>
+                        <td className="py-3.5 px-4 font-semibold">
+                          <span
+                            className={`px-2 py-0.5 rounded text-[10px] font-black uppercase tracking-wider ${
+                              usr.role === 'admin'
+                                ? 'bg-amber-500 text-gray-950 border border-amber-600'
+                                : 'bg-gray-100 text-gray-700'
+                            }`}
+                          >
+                            {usr.role}
+                          </span>
+                        </td>
+                        <td className="py-3.5 px-4 font-bold">
+                          <span
+                            className={`px-2 py-0.5 rounded text-[11px] ${
+                              usr.status === 'active'
+                                ? 'bg-emerald-100 text-emerald-800'
+                                : 'bg-rose-100 text-rose-800'
+                            }`}
+                          >
+                            {usr.status.toUpperCase()}
+                          </span>
+                        </td>
+                        <td className="py-3.5 px-4 text-gray-600 font-mono text-[11px]">
+                          {usr.createdAt}
+                        </td>
+                        <td className="py-3.5 px-4 font-semibold text-gray-800">
+                          <div>
+                            <span>{usr.ordersCount} Orders</span>
+                            <span className="block text-emerald-700 font-bold">
+                              ${usr.totalSpent.toFixed(2)}
+                            </span>
+                          </div>
+                        </td>
+                        <td className="py-3.5 px-4 text-right">
+                          <button
+                            onClick={() => toggleUserStatus(usr.id)}
+                            className={`px-2.5 py-1 rounded text-xs font-bold transition flex items-center gap-1 ml-auto ${
+                              usr.status === 'active'
+                                ? 'bg-rose-50 text-rose-600 hover:bg-rose-100 border border-rose-200'
+                                : 'bg-emerald-50 text-emerald-600 hover:bg-emerald-100 border border-emerald-200'
+                            }`}
+                          >
+                            {usr.status === 'active' ? (
+                              <>
+                                <UserX className="w-3.5 h-3.5" /> Suspend User
+                              </>
+                            ) : (
+                              <>
+                                <UserCheck className="w-3.5 h-3.5" /> Activate User
+                              </>
+                            )}
+                          </button>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        )}
+
 
         {/* ================= TAB 3: ORDERS MANAGEMENT ================= */}
         {activeTab === 'orders' && (

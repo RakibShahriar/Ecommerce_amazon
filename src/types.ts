@@ -125,5 +125,18 @@ export interface FilterState {
   sortBy: 'featured' | 'price_low_to_high' | 'price_high_to_low' | 'avg_review' | 'newest';
 }
 
+export interface UserAccount {
+  id: string;
+  name: string;
+  email: string;
+  role: 'customer' | 'admin';
+  status: 'active' | 'suspended';
+  createdAt: string;
+  ordersCount: number;
+  totalSpent: number;
+  avatar?: string;
+  primeMember: boolean;
+}
+
 export type ActiveView = 'home' | 'search' | 'product_detail' | 'cart' | 'checkout' | 'orders' | 'admin';
 

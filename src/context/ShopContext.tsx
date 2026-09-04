@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
-import { Product, CartItem, FilterState, Order, ShippingAddress, PaymentMethod, ActiveView } from '../types';
+import { Product, CartItem, FilterState, Order, ShippingAddress, PaymentMethod, ActiveView, UserAccount } from '../types';
 import { MOCK_PRODUCTS } from '../data/mockProducts';
 
 interface ShopContextType {
@@ -18,6 +18,21 @@ interface ShopContextType {
   
   // Order Management (Admin)
   updateOrderStatus: (orderId: string, status: Order['status']) => void;
+
+  // Authentication & User Accounts
+  currentUser: UserAccount | null;
+  isAdminAuthenticated: boolean;
+  isAuthModalOpen: boolean;
+  setIsAuthModalOpen: (open: boolean) => void;
+  authModalMode: 'login' | 'register' | 'admin';
+  setAuthModalMode: (mode: 'login' | 'register' | 'admin') => void;
+  loginUser: (email: string, pass: string) => boolean;
+  registerUser: (name: string, email: string, pass: string) => boolean;
+  logoutUser: () => void;
+  loginAdmin: (pinOrPass: string) => boolean;
+  logoutAdmin: () => void;
+  usersList: UserAccount[];
+  toggleUserStatus: (userId: string) => void;
 
   // Cart
   cart: CartItem[];
@@ -69,6 +84,7 @@ interface ShopContextType {
   toastMessage: string | null;
   showToast: (msg: string) => void;
 }
+
 
 const DEFAULT_FILTERS: FilterState = {
   searchQuery: '',
@@ -208,6 +224,50 @@ export const ShopProvider: React.FC<{ children: React.ReactNode }> = ({ children
     ];
   });
 
+  // Auth & Admin states
+  const [currentUser, setCurrentUser] = useState<UserAccount | null>(() => {
+    try {
+      const saved = localStorage.getItem('soa_user');
+      if (saved) return JSON.parse(saved);
+    } catch {}
+    return {
+      id: 'usr-1',
+      name: 'Alex Johnson',
+      email: 'alex.johnson@example.com',
+      role: 'customer',
+      status: 'active',
+      createdAt: '2025-01-15',
+      ordersCount: 4,
+      totalSpent: 432.50,
+      primeMember: true
+    };
+  });
+
+  const [isAdminAuthenticated, setIsAdminAuthenticated] = useState<boolean>(() => {
+    try {
+      return localStorage.getItem('soa_admin_auth') === 'true';
+    } catch {
+      return false;
+    }
+  });
+
+  const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
+  const [authModalMode, setAuthModalMode] = useState<'login' | 'register' | 'admin'>('login');
+
+  const [usersList, setUsersList] = useState<UserAccount[]>(() => {
+    try {
+      const saved = localStorage.getItem('soa_users_list');
+      if (saved) return JSON.parse(saved);
+    } catch {}
+    return [
+      { id: 'usr-1', name: 'Alex Johnson', email: 'alex.johnson@example.com', role: 'customer', status: 'active', createdAt: '2025-01-15', ordersCount: 4, totalSpent: 432.50, primeMember: true },
+      { id: 'usr-2', name: 'Nusrat Jahan', email: 'nusrat.jahan@gmail.com', role: 'customer', status: 'active', createdAt: '2025-03-02', ordersCount: 2, totalSpent: 185.00, primeMember: true },
+      { id: 'usr-3', name: 'Tanvir Hasan', email: 'tanvir.h@yahoo.com', role: 'customer', status: 'active', createdAt: '2025-04-18', ordersCount: 1, totalSpent: 64.99, primeMember: false },
+      { id: 'usr-4', name: 'SOA Merchant Admin', email: 'admin@soa.com', role: 'admin', status: 'active', createdAt: '2024-11-01', ordersCount: 0, totalSpent: 0, primeMember: true },
+      { id: 'usr-5', name: 'Karim Rahman', email: 'karim.r@outlook.com', role: 'customer', status: 'suspended', createdAt: '2025-02-20', ordersCount: 0, totalSpent: 0, primeMember: false }
+    ];
+  });
+
   const [filters, setFilters] = useState<FilterState>(DEFAULT_FILTERS);
   const [sideNavOpen, setSideNavOpen] = useState(false);
   const [locationModalOpen, setLocationModalOpen] = useState(false);
@@ -216,6 +276,114 @@ export const ShopProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const [paymentMethod, setPaymentMethod] = useState<PaymentMethod>(DEFAULT_PAYMENT);
   const [currentOrderConfirmation, setCurrentOrderConfirmation] = useState<Order | null>(null);
   const [toastMessage, setToastMessage] = useState<string | null>(null);
+
+  // Sync to local storage
+  useEffect(() => {
+    try {
+      localStorage.setItem('soa_user', JSON.stringify(currentUser));
+    } catch {}
+  }, [currentUser]);
+
+  useEffect(() => {
+    try {
+      localStorage.setItem('soa_admin_auth', isAdminAuthenticated ? 'true' : 'false');
+    } catch {}
+  }, [isAdminAuthenticated]);
+
+  useEffect(() => {
+    try {
+      localStorage.setItem('soa_users_list', JSON.stringify(usersList));
+    } catch {}
+  }, [usersList]);
+
+  const loginUser = (email: string, pass: string): boolean => {
+    const existingUser = usersList.find((u) => u.email.toLowerCase() === email.toLowerCase());
+    if (existingUser) {
+      if (existingUser.status === 'suspended') {
+        showToast('Account is suspended. Please contact support.');
+        return false;
+      }
+      setCurrentUser(existingUser);
+      showToast(`Welcome back, ${existingUser.name}!`);
+      setIsAuthModalOpen(false);
+      return true;
+    }
+    // Create new customer session if email doesn't exist
+    const newAcc: UserAccount = {
+      id: `usr-${Date.now()}`,
+      name: email.split('@')[0],
+      email,
+      role: 'customer',
+      status: 'active',
+      createdAt: new Date().toISOString().split('T')[0],
+      ordersCount: 0,
+      totalSpent: 0,
+      primeMember: true
+    };
+    setUsersList((prev) => [...prev, newAcc]);
+    setCurrentUser(newAcc);
+    showToast(`Account signed in successfully as ${newAcc.name}!`);
+    setIsAuthModalOpen(false);
+    return true;
+  };
+
+  const registerUser = (name: string, email: string, pass: string): boolean => {
+    const newAcc: UserAccount = {
+      id: `usr-${Date.now()}`,
+      name: name.trim() || email.split('@')[0],
+      email: email.trim(),
+      role: 'customer',
+      status: 'active',
+      createdAt: new Date().toISOString().split('T')[0],
+      ordersCount: 0,
+      totalSpent: 0,
+      primeMember: true
+    };
+    setUsersList((prev) => [...prev, newAcc]);
+    setCurrentUser(newAcc);
+    showToast(`Welcome to SOA Traceable Foods, ${newAcc.name}!`);
+    setIsAuthModalOpen(false);
+    return true;
+  };
+
+  const logoutUser = () => {
+    setCurrentUser(null);
+    showToast('Signed out of account.');
+  };
+
+  const loginAdmin = (pinOrPass: string): boolean => {
+    const cleaned = pinOrPass.trim().toLowerCase();
+    if (cleaned === '1234' || cleaned === 'admin123' || cleaned === 'admin@soa.com' || cleaned === 'admin') {
+      setIsAdminAuthenticated(true);
+      showToast('Admin authentication successful! Access granted.');
+      setIsAuthModalOpen(false);
+      return true;
+    }
+    showToast('Invalid Admin Credentials. Try PIN 1234 or admin123');
+    return false;
+  };
+
+  const logoutAdmin = () => {
+    setIsAdminAuthenticated(false);
+    showToast('Logged out of Admin Seller Central.');
+    if (activeView === 'admin') {
+      setActiveView('home');
+    }
+  };
+
+  const toggleUserStatus = (userId: string) => {
+    setUsersList((prev) =>
+      prev.map((u) => {
+        if (u.id === userId) {
+          const nextStatus = u.status === 'active' ? 'suspended' : 'active';
+          showToast(`User ${u.name} status changed to ${nextStatus}.`);
+          return { ...u, status: nextStatus };
+        }
+        return u;
+      })
+    );
+  };
+
 
   // Sync to local storage
   useEffect(() => {
@@ -571,6 +739,19 @@ export const ShopProvider: React.FC<{ children: React.ReactNode }> = ({ children
         updateProduct,
         deleteProduct,
         updateOrderStatus,
+        currentUser,
+        isAdminAuthenticated,
+        isAuthModalOpen,
+        setIsAuthModalOpen,
+        authModalMode,
+        setAuthModalMode,
+        loginUser,
+        registerUser,
+        logoutUser,
+        loginAdmin,
+        logoutAdmin,
+        usersList,
+        toggleUserStatus,
         cart,
         addToCart,
         removeFromCart,

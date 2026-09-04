@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { ChevronRight } from 'lucide-react';
+import { ChevronRight, ChevronLeft, Sparkles, SlidersHorizontal } from 'lucide-react';
 import { HOME_CARDS, MOCK_PRODUCTS } from '../data/mockProducts';
 import { ProductCard } from './ProductCard';
 import { useShop } from '../context/ShopContext';
@@ -25,10 +25,34 @@ export const HomeFeed: React.FC = () => {
     setActiveView('search');
   };
 
+  const scrollCarousel = (id: string, direction: 'left' | 'right') => {
+    const el = document.getElementById(id);
+    if (el) {
+      el.scrollBy({ left: direction === 'left' ? -300 : 300, behavior: 'smooth' });
+    }
+  };
+
   const banglaCategories = ['মধু', 'বীজ ও পাউডার', 'চাল ও শস্য', 'তেল ও ঘি', 'কম্বোপ্যাক', 'মসলা', 'আটা ও ছাতু'];
 
   return (
-    <div className="relative z-10 max-w-[1500px] mx-auto px-2 sm:px-4 -mt-20 md:-mt-44 pb-16 space-y-8">
+    <div className="relative z-10 max-w-[1500px] mx-auto px-2 sm:px-4 -mt-20 md:-mt-44 pb-16 space-y-6">
+      
+      {/* Category Navigation Pills Ribbon */}
+      <div className="bg-white p-3 rounded-xl shadow-md border border-gray-200 flex items-center gap-2 overflow-x-auto scrollbar-none">
+        <span className="text-xs font-black text-gray-700 uppercase tracking-wider flex items-center gap-1.5 flex-shrink-0 mr-1">
+          <Sparkles className="w-4 h-4 text-amber-500" /> ক্যাটাগরি:
+        </span>
+        {banglaCategories.map((cat) => (
+          <button
+            key={cat}
+            onClick={() => handleSectionClick(cat)}
+            className="px-3.5 py-1.5 bg-amber-50 hover:bg-amber-400 text-amber-950 hover:text-gray-950 border border-amber-200 hover:border-amber-500 rounded-full text-xs font-bold transition flex-shrink-0 shadow-sm"
+          >
+            {cat}
+          </button>
+        ))}
+      </div>
+
       {/* 7 Item Sections Grid */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
         {HOME_CARDS.map((card) => (
@@ -98,22 +122,24 @@ export const HomeFeed: React.FC = () => {
         ))}
       </div>
 
-      {/* Featured Products Rows for all 7 Bangla Sections */}
+      {/* Mobile-First Touch-Swipeable Horizontal Carousels for Categories */}
       {banglaCategories.map((itemCategory) => {
         const itemProducts = MOCK_PRODUCTS.filter((p) => p.department === itemCategory);
         if (itemProducts.length === 0) return null;
+        const carouselId = `carousel-${itemCategory.replace(/\s+/g, '-')}`;
 
         return (
           <div
             key={itemCategory}
-            className="bg-white p-5 rounded-xl shadow-sm border border-gray-200 space-y-4"
+            className="bg-white p-4 sm:p-5 rounded-xl shadow-sm border border-gray-200 space-y-3 relative group/carousel"
           >
-            <div className="flex items-center justify-between border-b border-gray-100 pb-3">
+            {/* Category Header */}
+            <div className="flex items-center justify-between border-b border-gray-100 pb-2.5">
               <div className="flex items-center gap-2">
-                <div className="p-2 bg-amber-100 text-amber-800 rounded-lg font-black text-xs uppercase tracking-wider">
+                <div className="p-1.5 bg-amber-100 text-amber-900 rounded-lg font-black text-xs uppercase tracking-wider">
                   {itemCategory}
                 </div>
-                <h3 className="text-lg font-bold text-gray-900">
+                <h3 className="text-base sm:text-lg font-bold text-gray-900">
                   {itemCategory} কালেকশন
                 </h3>
               </div>
@@ -121,18 +147,47 @@ export const HomeFeed: React.FC = () => {
                 onClick={() => handleSectionClick(itemCategory)}
                 className="text-xs font-bold text-[#007185] hover:text-[#c7511f] hover:underline flex items-center gap-0.5"
               >
-                সব {itemCategory} প্রোডাক্ট দেখুন ({itemProducts.length}) <ChevronRight className="w-4 h-4" />
+                সব দেখুন ({itemProducts.length}) <ChevronRight className="w-4 h-4" />
               </button>
             </div>
 
-            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
-              {itemProducts.map((prod) => (
-                <ProductCard
-                  key={prod.id}
-                  product={prod}
-                  onQuickView={(p) => setQuickViewProduct(p)}
-                />
-              ))}
+            {/* Carousel Container with Scroll Buttons */}
+            <div className="relative">
+              <button
+                type="button"
+                onClick={() => scrollCarousel(carouselId, 'left')}
+                className="absolute -left-3 top-1/2 -translate-y-1/2 z-20 bg-white/95 text-gray-800 p-2 rounded-full shadow-lg border border-gray-200 hover:bg-amber-400 hover:text-gray-950 transition opacity-0 group-hover/carousel:opacity-100 hidden sm:flex items-center justify-center focus:outline-none"
+                title="Scroll Left"
+              >
+                <ChevronLeft className="w-5 h-5 stroke-[2.5]" />
+              </button>
+
+              <button
+                type="button"
+                onClick={() => scrollCarousel(carouselId, 'right')}
+                className="absolute -right-3 top-1/2 -translate-y-1/2 z-20 bg-white/95 text-gray-800 p-2 rounded-full shadow-lg border border-gray-200 hover:bg-amber-400 hover:text-gray-950 transition opacity-0 group-hover/carousel:opacity-100 hidden sm:flex items-center justify-center focus:outline-none"
+                title="Scroll Right"
+              >
+                <ChevronRight className="w-5 h-5 stroke-[2.5]" />
+              </button>
+
+              {/* Touch-Swipeable Horizontal Track */}
+              <div
+                id={carouselId}
+                className="flex overflow-x-auto snap-x snap-mandatory gap-3 sm:gap-4 scrollbar-none scroll-smooth pb-2 pt-1 px-1"
+              >
+                {itemProducts.map((prod) => (
+                  <div
+                    key={prod.id}
+                    className="w-[200px] sm:w-[230px] flex-shrink-0 snap-start"
+                  >
+                    <ProductCard
+                      product={prod}
+                      onQuickView={(p) => setQuickViewProduct(p)}
+                    />
+                  </div>
+                ))}
+              </div>
             </div>
           </div>
         );
@@ -148,3 +203,4 @@ export const HomeFeed: React.FC = () => {
     </div>
   );
 };
+
