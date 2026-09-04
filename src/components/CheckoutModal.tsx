@@ -22,7 +22,7 @@ export const CheckoutModal: React.FC = () => {
 
   const activeItems = cart.filter((i) => !i.savedForLater && i.selectedForCheckout);
   const itemsSubtotal = cartSubtotal;
-  const shippingCost = deliverySpeed === 'priority' ? 9.99 : 0;
+  const shippingCost = deliverySpeed === 'priority' ? 60 : 0;
   const estimatedTax = Number((itemsSubtotal * 0.088).toFixed(2));
   const orderTotal = Number((itemsSubtotal + shippingCost + estimatedTax).toFixed(2));
 
@@ -100,7 +100,7 @@ export const CheckoutModal: React.FC = () => {
                   <img src={it.product.image} alt={it.product.title} className="w-14 h-14 object-contain" />
                   <div className="text-xs space-y-0.5">
                     <p className="font-semibold text-gray-900 line-clamp-1">{it.product.title}</p>
-                    <p className="text-gray-500">Qty: {it.quantity} &bull; ${(it.product.price * it.quantity).toFixed(2)}</p>
+                    <p className="text-gray-500">Qty: {it.quantity} &bull; ৳{(it.product.price * it.quantity).toLocaleString()}</p>
                   </div>
                 </div>
               ))}
@@ -328,7 +328,7 @@ export const CheckoutModal: React.FC = () => {
                       id: 'pm-2',
                       type: 'gift_card',
                       last4: '9821',
-                      brand: 'SOA Gift Card Balance ($500.00)',
+                      brand: 'SOA Gift Card Balance (৳5,000)',
                       expiryMonth: '12',
                       expiryYear: '30',
                       holderName: 'Alex Johnson',
@@ -338,7 +338,7 @@ export const CheckoutModal: React.FC = () => {
                 />
                 <div>
                   <p className="font-bold text-gray-900">SOA Gift Card Balance</p>
-                  <p className="text-green-700 text-[11px] font-semibold">Available: $500.00</p>
+                  <p className="text-green-700 text-[11px] font-semibold">Available: ৳5,000</p>
                 </div>
               </label>
             </div>
@@ -415,7 +415,7 @@ export const CheckoutModal: React.FC = () => {
                         onChange={() => setDeliverySpeed('priority')}
                         className="text-amber-500"
                       />
-                      <span className="font-bold text-gray-800">Priority ($9.99)</span>
+                      <span className="font-bold text-gray-800">Priority (৳60)</span>
                     </div>
                     <span className="text-[11px] text-gray-600 mt-1">Today by 8 PM</span>
                   </label>
@@ -432,7 +432,7 @@ export const CheckoutModal: React.FC = () => {
                       <div className="flex-1">
                         <p className="font-semibold text-gray-900 line-clamp-1">{item.product.title}</p>
                         <p className="text-gray-500">
-                          Qty: {item.quantity} &bull; ${(item.product.price * item.quantity).toFixed(2)}
+                          Qty: {item.quantity} &bull; ৳{(item.product.price * item.quantity).toLocaleString()}
                         </p>
                       </div>
                     </div>
@@ -461,19 +461,19 @@ export const CheckoutModal: React.FC = () => {
             <h3 className="font-bold text-sm text-gray-900">Order Summary</h3>
             <div className="flex justify-between text-gray-700">
               <span>Items ({activeItems.reduce((acc, i) => acc + i.quantity, 0)}):</span>
-              <span>${itemsSubtotal.toFixed(2)}</span>
+              <span>৳{itemsSubtotal.toLocaleString()}</span>
             </div>
             <div className="flex justify-between text-gray-700">
               <span>Shipping &amp; handling:</span>
-              <span>{shippingCost === 0 ? 'FREE' : `$${shippingCost.toFixed(2)}`}</span>
+              <span>{shippingCost === 0 ? 'FREE' : `৳${shippingCost.toLocaleString()}`}</span>
             </div>
             <div className="flex justify-between text-gray-700">
               <span>Estimated tax:</span>
-              <span>${estimatedTax.toFixed(2)}</span>
+              <span>৳{estimatedTax.toLocaleString()}</span>
             </div>
             <div className="flex justify-between text-base font-bold text-[#b12704] pt-2 border-t border-gray-200">
               <span>Order total:</span>
-              <span>${orderTotal.toFixed(2)}</span>
+              <span>৳{orderTotal.toLocaleString()}</span>
             </div>
           </div>
 

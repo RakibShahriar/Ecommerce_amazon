@@ -205,10 +205,10 @@ export const ShopProvider: React.FC<{ children: React.ReactNode }> = ({ children
             addedAt: Date.now() - 400000000
           }
         ],
-        subtotal: 139.99,
+        subtotal: 1450.00,
         shipping: 0,
-        tax: 12.60,
-        total: 152.59,
+        tax: 72.50,
+        total: 1522.50,
         shippingAddress: DEFAULT_ADDRESS,
         paymentMethod: DEFAULT_PAYMENT,
         deliverySpeed: 'free',
@@ -260,9 +260,9 @@ export const ShopProvider: React.FC<{ children: React.ReactNode }> = ({ children
       if (saved) return JSON.parse(saved);
     } catch {}
     return [
-      { id: 'usr-1', name: 'Alex Johnson', email: 'alex.johnson@example.com', role: 'customer', status: 'active', createdAt: '2025-01-15', ordersCount: 4, totalSpent: 432.50, primeMember: true },
-      { id: 'usr-2', name: 'Nusrat Jahan', email: 'nusrat.jahan@gmail.com', role: 'customer', status: 'active', createdAt: '2025-03-02', ordersCount: 2, totalSpent: 185.00, primeMember: true },
-      { id: 'usr-3', name: 'Tanvir Hasan', email: 'tanvir.h@yahoo.com', role: 'customer', status: 'active', createdAt: '2025-04-18', ordersCount: 1, totalSpent: 64.99, primeMember: false },
+      { id: 'usr-1', name: 'Alex Johnson', email: 'alex.johnson@example.com', role: 'customer', status: 'active', createdAt: '2025-01-15', ordersCount: 4, totalSpent: 4850.00, primeMember: true },
+      { id: 'usr-2', name: 'Nusrat Jahan', email: 'nusrat.jahan@gmail.com', role: 'customer', status: 'active', createdAt: '2025-03-02', ordersCount: 2, totalSpent: 2150.00, primeMember: true },
+      { id: 'usr-3', name: 'Tanvir Hasan', email: 'tanvir.h@yahoo.com', role: 'customer', status: 'active', createdAt: '2025-04-18', ordersCount: 1, totalSpent: 750.00, primeMember: false },
       { id: 'usr-4', name: 'SOA Merchant Admin', email: 'admin@soa.com', role: 'admin', status: 'active', createdAt: '2024-11-01', ordersCount: 0, totalSpent: 0, primeMember: true },
       { id: 'usr-5', name: 'Karim Rahman', email: 'karim.r@outlook.com', role: 'customer', status: 'suspended', createdAt: '2025-02-20', ordersCount: 0, totalSpent: 0, primeMember: false }
     ];
@@ -577,7 +577,7 @@ export const ShopProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const checkoutItems = activeCartItems.filter((item) => item.selectedForCheckout);
   const cartCount = activeCartItems.reduce((acc, item) => acc + item.quantity, 0);
   const cartSubtotal = checkoutItems.reduce((acc, item) => acc + item.product.price * item.quantity, 0);
-  const freeShippingThreshold = 35.0;
+  const freeShippingThreshold = 1000.0;
   const amountNeededForFreeShipping = Math.max(0, freeShippingThreshold - cartSubtotal);
   const hasPrimeDelivery = true; // SOA Prime simulator
 
@@ -689,7 +689,7 @@ export const ShopProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const placeOrder = (deliverySpeed: 'free' | 'standard' | 'priority'): Order => {
     const itemsToOrder = checkoutItems;
     const subtotal = cartSubtotal;
-    const shipping = deliverySpeed === 'priority' ? 9.99 : 0;
+    const shipping = deliverySpeed === 'priority' ? 60 : 0;
     const tax = Number((subtotal * 0.088).toFixed(2));
     const total = Number((subtotal + shipping + tax).toFixed(2));
 

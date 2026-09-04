@@ -53,8 +53,6 @@ export const ProductDetailPage: React.FC = () => {
   const gallery = p.galleryImages?.length ? p.galleryImages : [p.image];
   const activeImage = gallery[activeImageIndex] || p.image;
 
-  const [dollars, cents] = p.price.toFixed(2).split('.');
-
   const handleAddToCart = () => {
     addToCart(p, selectedQuantity, selectedVariants);
   };
@@ -195,16 +193,15 @@ export const ProductDetailPage: React.FC = () => {
                   -{p.dealDiscountPercent}%
                 </span>
               )}
-              <div className="flex items-start text-gray-900">
-                <span className="text-sm font-medium relative top-1">$</span>
-                <span className="text-3xl font-black leading-none">{dollars}</span>
-                <span className="text-sm font-medium relative top-1">{cents}</span>
+              <div className="flex items-baseline text-gray-900">
+                <span className="text-lg font-bold mr-0.5">৳</span>
+                <span className="text-3xl font-black leading-none">{p.price.toLocaleString()}</span>
               </div>
             </div>
 
             {p.originalPrice && p.originalPrice > p.price && (
               <div className="text-xs text-gray-500">
-                Typical price: <span className="line-through">${p.originalPrice.toFixed(2)}</span>
+                Typical price: <span className="line-through">৳{p.originalPrice.toLocaleString()}</span>
               </div>
             )}
 
@@ -234,7 +231,7 @@ export const ProductDetailPage: React.FC = () => {
                           : 'border-gray-300 hover:border-gray-500 bg-white text-gray-700'
                       }`}
                     >
-                      {v.name} {v.priceModifier ? `(+$${v.priceModifier})` : ''}
+                      {v.name} {v.priceModifier ? `(+৳${v.priceModifier})` : ''}
                     </button>
                   );
                 })}
@@ -272,10 +269,9 @@ export const ProductDetailPage: React.FC = () => {
         <div className="lg:col-span-3">
           <div className="bg-white rounded-lg border border-gray-300 p-4 shadow-sm space-y-3.5 sticky top-20 text-xs">
             {/* Price in Buy Box */}
-            <div className="flex items-start text-gray-900">
-              <span className="text-sm font-medium relative top-0.5">$</span>
-              <span className="text-2xl font-black leading-none">{dollars}</span>
-              <span className="text-sm font-medium relative top-0.5">{cents}</span>
+            <div className="flex items-baseline text-gray-900">
+              <span className="text-base font-bold mr-0.5">৳</span>
+              <span className="text-2xl font-black leading-none">{p.price.toLocaleString()}</span>
             </div>
 
             {/* Delivery Info */}

@@ -368,7 +368,7 @@ export const AdminPanel: React.FC = () => {
               <div className="bg-white p-5 rounded-xl shadow-sm border border-gray-200 flex items-start justify-between">
                 <div>
                   <p className="text-xs font-medium text-gray-500 uppercase tracking-wide">Total Sales Revenue</p>
-                  <h3 className="text-2xl font-bold text-gray-900 mt-1">${totalRevenue.toFixed(2)}</h3>
+                  <h3 className="text-2xl font-bold text-gray-900 mt-1">৳{totalRevenue.toLocaleString()}</h3>
                   <p className="text-xs text-emerald-600 font-medium mt-1 flex items-center gap-1">
                     <TrendingUp className="w-3.5 h-3.5" /> +12.4% from last week
                   </p>
@@ -382,7 +382,7 @@ export const AdminPanel: React.FC = () => {
                 <div>
                   <p className="text-xs font-medium text-gray-500 uppercase tracking-wide">Total Orders</p>
                   <h3 className="text-2xl font-bold text-gray-900 mt-1">{totalOrdersCount}</h3>
-                  <p className="text-xs text-gray-500 mt-1">Avg Order Value: ${avgOrderValue.toFixed(2)}</p>
+                  <p className="text-xs text-gray-500 mt-1">Avg Order Value: ৳{avgOrderValue.toLocaleString()}</p>
                 </div>
                 <div className="p-3 bg-blue-50 text-blue-600 rounded-lg">
                   <ShoppingBag className="w-6 h-6" />
@@ -443,7 +443,7 @@ export const AdminPanel: React.FC = () => {
                         </div>
 
                         <div className="flex items-center gap-4">
-                          <span className="font-bold text-gray-900">${ord.total.toFixed(2)}</span>
+                          <span className="font-bold text-gray-900">৳{ord.total.toLocaleString()}</span>
                           <span
                             className={`px-2 py-0.5 rounded-full font-semibold capitalize text-[10px] ${
                               ord.status === 'delivered'
@@ -609,10 +609,10 @@ export const AdminPanel: React.FC = () => {
                             </span>
                           </td>
                           <td className="py-3 px-4 font-bold text-gray-900">
-                            ${product.price.toFixed(2)}
+                            ৳{product.price.toLocaleString()}
                             {product.originalPrice && (
                               <span className="block text-[10px] text-gray-400 line-through font-normal">
-                                ${product.originalPrice.toFixed(2)}
+                                ৳{product.originalPrice.toLocaleString()}
                               </span>
                             )}
                           </td>
@@ -780,7 +780,7 @@ export const AdminPanel: React.FC = () => {
                           <div>
                             <span>{usr.ordersCount} Orders</span>
                             <span className="block text-emerald-700 font-bold">
-                              ${usr.totalSpent.toFixed(2)}
+                              ৳{usr.totalSpent.toLocaleString()}
                             </span>
                           </div>
                         </td>
@@ -869,7 +869,7 @@ export const AdminPanel: React.FC = () => {
                             </div>
                           </td>
                           <td className="py-3 px-4 font-bold text-gray-900">
-                            ${ord.total.toFixed(2)}
+                            ৳{ord.total.toLocaleString()}
                             <span className="block text-[10px] text-gray-400 font-normal uppercase">
                               {ord.deliverySpeed} shipping
                             </span>
@@ -1031,7 +1031,7 @@ export const AdminPanel: React.FC = () => {
 
               <div className="grid grid-cols-3 gap-4">
                 <div>
-                  <label className="block font-bold text-gray-700 mb-1">Price ($) *</label>
+                  <label className="block font-bold text-gray-700 mb-1">Price (৳) *</label>
                   <input
                     type="number"
                     step="0.01"
@@ -1042,7 +1042,7 @@ export const AdminPanel: React.FC = () => {
                   />
                 </div>
                 <div>
-                  <label className="block font-bold text-gray-700 mb-1">Original Price ($)</label>
+                  <label className="block font-bold text-gray-700 mb-1">Original Price (৳)</label>
                   <input
                     type="number"
                     step="0.01"
@@ -1175,7 +1175,7 @@ export const AdminPanel: React.FC = () => {
 
               <div className="grid grid-cols-3 gap-4">
                 <div>
-                  <label className="block font-bold text-gray-700 mb-1">Price ($)</label>
+                  <label className="block font-bold text-gray-700 mb-1">Price (৳)</label>
                   <input
                     type="number"
                     step="0.01"
@@ -1185,7 +1185,7 @@ export const AdminPanel: React.FC = () => {
                   />
                 </div>
                 <div>
-                  <label className="block font-bold text-gray-700 mb-1">Original Price ($)</label>
+                  <label className="block font-bold text-gray-700 mb-1">Original Price (৳)</label>
                   <input
                     type="number"
                     step="0.01"

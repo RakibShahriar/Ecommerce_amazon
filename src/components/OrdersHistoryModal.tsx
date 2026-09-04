@@ -105,7 +105,7 @@ export const OrdersHistoryModal: React.FC = () => {
                     <span className="block text-[11px] uppercase tracking-wider font-semibold text-gray-500">
                       Total
                     </span>
-                    <span className="font-bold text-gray-800">${ord.total.toFixed(2)}</span>
+                    <span className="font-bold text-gray-800">৳{ord.total.toLocaleString()}</span>
                   </div>
 
                   <div>

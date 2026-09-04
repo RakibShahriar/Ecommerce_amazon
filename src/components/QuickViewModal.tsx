@@ -77,10 +77,10 @@ export const QuickViewModal: React.FC<QuickViewModalProps> = ({ product, onClose
 
             {/* Price */}
             <div className="flex items-baseline gap-2">
-              <span className="text-2xl font-black text-gray-900">${product.price.toFixed(2)}</span>
+              <span className="text-2xl font-black text-gray-900">৳{product.price.toLocaleString()}</span>
               {product.originalPrice && (
                 <span className="text-sm text-gray-500 line-through">
-                  ${product.originalPrice.toFixed(2)}
+                  ৳{product.originalPrice.toLocaleString()}
                 </span>
               )}
             </div>

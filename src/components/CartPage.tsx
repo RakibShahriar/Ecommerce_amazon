@@ -51,7 +51,7 @@ export const CartPage: React.FC = () => {
             </p>
           ) : (
             <p className="text-xs sm:text-sm text-gray-800">
-              Add <span className="font-bold text-[#b12704]">${amountNeededForFreeShipping.toFixed(2)}</span> of eligible items to get <span className="font-bold text-green-800">FREE Delivery</span>.
+              Add <span className="font-bold text-[#b12704]">৳{amountNeededForFreeShipping.toLocaleString()}</span> of eligible items to get <span className="font-bold text-green-800">FREE Delivery</span>.
             </p>
           )}
           <div className="w-full bg-gray-200 h-2 rounded-full overflow-hidden">
@@ -208,7 +208,7 @@ export const CartPage: React.FC = () => {
 
                   {/* Price */}
                   <div className="text-right font-bold text-base text-gray-900 whitespace-nowrap pl-2">
-                    ${(item.product.price * item.quantity).toFixed(2)}
+                    ৳{(item.product.price * item.quantity).toLocaleString()}
                   </div>
                 </div>
               ))}
@@ -219,7 +219,7 @@ export const CartPage: React.FC = () => {
           {activeItems.length > 0 && (
             <div className="pt-4 border-t border-gray-200 text-right text-sm">
               <span>Subtotal ({checkoutCount} items): </span>
-              <span className="font-bold text-lg text-gray-900">${cartSubtotal.toFixed(2)}</span>
+              <span className="font-bold text-lg text-gray-900">৳{cartSubtotal.toLocaleString()}</span>
             </div>
           )}
         </div>
@@ -229,7 +229,7 @@ export const CartPage: React.FC = () => {
           <div className="space-y-1">
             <div className="text-sm">
               Subtotal ({checkoutCount} items):{' '}
-              <span className="text-lg font-bold text-gray-900">${cartSubtotal.toFixed(2)}</span>
+              <span className="text-lg font-bold text-gray-900">৳{cartSubtotal.toLocaleString()}</span>
             </div>
             <label className="flex items-center gap-2 cursor-pointer text-xs text-gray-700 pt-1">
               <input type="checkbox" className="w-3.5 h-3.5 text-amber-500 rounded" />
@@ -280,7 +280,7 @@ export const CartPage: React.FC = () => {
                   />
                 </div>
                 <h4 className="font-semibold text-gray-900 line-clamp-2">{item.product.title}</h4>
-                <div className="font-bold text-sm text-gray-900">${item.product.price.toFixed(2)}</div>
+                <div className="font-bold text-sm text-gray-900">৳{item.product.price.toLocaleString()}</div>
                 <div className="flex gap-2 pt-1">
                   <button
                     onClick={() => moveToCartFromSaved(item.cartItemId)}

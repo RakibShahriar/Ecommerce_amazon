@@ -34,8 +34,6 @@ export const ProductCard: React.FC<ProductCardProps> = ({
     toggleWishlist(product.id);
   };
 
-  const [dollars, cents] = product.price.toFixed(2).split('.');
-
   return (
     <div
       id={`product-card-${product.id}`}
@@ -144,15 +142,14 @@ export const ProductCard: React.FC<ProductCardProps> = ({
 
           {/* Price Block */}
           <div className="flex items-baseline gap-1.5 pt-0.5">
-            <div className="flex items-start text-gray-900">
-              <span className="text-xs font-medium relative top-0.5">$</span>
-              <span className="text-xl font-bold leading-none tracking-tight">{dollars}</span>
-              <span className="text-xs font-medium relative top-0.5">{cents}</span>
+            <div className="flex items-baseline text-gray-900">
+              <span className="text-sm font-bold mr-0.5">৳</span>
+              <span className="text-xl font-bold leading-none tracking-tight">{product.price.toLocaleString()}</span>
             </div>
 
             {product.originalPrice && product.originalPrice > product.price && (
               <span className="text-xs text-gray-500 line-through">
-                List: ${product.originalPrice.toFixed(2)}
+                List: ৳{product.originalPrice.toLocaleString()}
               </span>
             )}
           </div>

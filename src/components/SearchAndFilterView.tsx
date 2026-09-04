@@ -251,11 +251,11 @@ export const SearchAndFilterView: React.FC = () => {
             <h4 className="font-bold text-gray-900 text-sm">Price</h4>
             <ul className="space-y-1.5">
               {[
-                { label: 'Under $25', min: null, max: 25 },
-                { label: '$25 to $50', min: 25, max: 50 },
-                { label: '$50 to $100', min: 50, max: 100 },
-                { label: '$100 to $200', min: 100, max: 200 },
-                { label: '$200 & Above', min: 200, max: null },
+                { label: 'Under ৳500', min: null, max: 500 },
+                { label: '৳500 to ৳1,000', min: 500, max: 1000 },
+                { label: '৳1,000 to ৳1,500', min: 1000, max: 1500 },
+                { label: '৳1,500 to ৳2,000', min: 1500, max: 2000 },
+                { label: '৳2,000 & Above', min: 2000, max: null },
               ].map((range, idx) => (
                 <li key={idx}>
                   <button
@@ -281,7 +281,7 @@ export const SearchAndFilterView: React.FC = () => {
             <form onSubmit={handlePriceApply} className="pt-2 flex items-center gap-1.5">
               <input
                 type="number"
-                placeholder="$ Min"
+                placeholder="৳ Min"
                 value={minPriceInput}
                 onChange={(e) => setMinPriceInput(e.target.value)}
                 className="w-16 px-2 py-1 border border-gray-300 rounded text-xs focus:ring-1 focus:ring-amber-500 focus:outline-none"
@@ -289,7 +289,7 @@ export const SearchAndFilterView: React.FC = () => {
               <span className="text-gray-400">-</span>
               <input
                 type="number"
-                placeholder="$ Max"
+                placeholder="৳ Max"
                 value={maxPriceInput}
                 onChange={(e) => setMaxPriceInput(e.target.value)}
                 className="w-16 px-2 py-1 border border-gray-300 rounded text-xs focus:ring-1 focus:ring-amber-500 focus:outline-none"
