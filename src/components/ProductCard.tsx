@@ -2,6 +2,7 @@ import React from 'react';
 import { Star, Heart, Check, ShoppingCart, Eye } from 'lucide-react';
 import { Product } from '../types';
 import { useShop } from '../context/ShopContext';
+import { toBanglaDigits } from '../utils/formatters';
 
 interface ProductCardProps {
   product: Product;
@@ -144,12 +145,12 @@ export const ProductCard: React.FC<ProductCardProps> = ({
           <div className="flex items-baseline gap-1.5 pt-0.5">
             <div className="flex items-baseline text-gray-900">
               <span className="text-sm font-bold mr-0.5">৳</span>
-              <span className="text-xl font-bold leading-none tracking-tight">{product.price.toLocaleString()}</span>
+              <span className="text-xl font-bold leading-none tracking-tight">{toBanglaDigits(product.price)}</span>
             </div>
 
             {product.originalPrice && product.originalPrice > product.price && (
               <span className="text-xs text-gray-500 line-through">
-                List: ৳{product.originalPrice.toLocaleString()}
+                List: ৳{toBanglaDigits(product.originalPrice)}
               </span>
             )}
           </div>

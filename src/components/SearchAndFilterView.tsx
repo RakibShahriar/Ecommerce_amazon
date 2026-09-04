@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Star, Check, SlidersHorizontal, Grid, List, RotateCcw, X, Filter } from 'lucide-react';
 import { useShop } from '../context/ShopContext';
+import { toBanglaDigits } from '../utils/formatters';
 import { ProductCard } from './ProductCard';
 import { DEPARTMENTS } from '../data/mockProducts';
 import { QuickViewModal } from './QuickViewModal';
@@ -77,8 +78,8 @@ export const SearchAndFilterView: React.FC = () => {
           </div>
           <h1 className="text-base sm:text-lg font-bold text-gray-900 mt-1">
             {filteredProducts.length > 0
-              ? `1-${filteredProducts.length} of ${filteredProducts.length} results`
-              : '0 results'}{' '}
+              ? `১-${toBanglaDigits(filteredProducts.length)} / মোট ${toBanglaDigits(filteredProducts.length)} টি ফলাফল`
+              : '০ টি ফলাফল'}{' '}
             {filters.searchQuery && (
               <span className="text-[#c7511f]">for "{filters.searchQuery}"</span>
             )}
@@ -251,11 +252,11 @@ export const SearchAndFilterView: React.FC = () => {
             <h4 className="font-bold text-gray-900 text-sm">Price</h4>
             <ul className="space-y-1.5">
               {[
-                { label: 'Under ৳500', min: null, max: 500 },
-                { label: '৳500 to ৳1,000', min: 500, max: 1000 },
-                { label: '৳1,000 to ৳1,500', min: 1000, max: 1500 },
-                { label: '৳1,500 to ৳2,000', min: 1500, max: 2000 },
-                { label: '৳2,000 & Above', min: 2000, max: null },
+                { label: '৳৫০০-এর নিচে', min: null, max: 500 },
+                { label: '৳৫০০ থেকে ৳১,০০০', min: 500, max: 1000 },
+                { label: '৳১,০০০ থেকে ৳১,৫০০', min: 1000, max: 1500 },
+                { label: '৳১,৫০০ থেকে ৳২,০০০', min: 1500, max: 2000 },
+                { label: '৳২,০০০ এবং উপরে', min: 2000, max: null },
               ].map((range, idx) => (
                 <li key={idx}>
                   <button

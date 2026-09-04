@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Package, Search, RotateCcw, ChevronRight, CheckCircle2, Truck, Star } from 'lucide-react';
 import { useShop } from '../context/ShopContext';
+import { toBanglaDigits } from '../utils/formatters';
 import { Order } from '../types';
 
 export const OrdersHistoryModal: React.FC = () => {
@@ -105,7 +106,7 @@ export const OrdersHistoryModal: React.FC = () => {
                     <span className="block text-[11px] uppercase tracking-wider font-semibold text-gray-500">
                       Total
                     </span>
-                    <span className="font-bold text-gray-800">৳{ord.total.toLocaleString()}</span>
+                    <span className="font-bold text-gray-800">৳{toBanglaDigits(ord.total)}</span>
                   </div>
 
                   <div>

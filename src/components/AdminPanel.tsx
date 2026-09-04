@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useShop } from '../context/ShopContext';
+import { toBanglaDigits } from '../utils/formatters';
 import { Product, Order } from '../types';
 import {
   LayoutDashboard,
@@ -368,7 +369,7 @@ export const AdminPanel: React.FC = () => {
               <div className="bg-white p-5 rounded-xl shadow-sm border border-gray-200 flex items-start justify-between">
                 <div>
                   <p className="text-xs font-medium text-gray-500 uppercase tracking-wide">Total Sales Revenue</p>
-                  <h3 className="text-2xl font-bold text-gray-900 mt-1">৳{totalRevenue.toLocaleString()}</h3>
+                  <h3 className="text-2xl font-bold text-gray-900 mt-1">৳{toBanglaDigits(totalRevenue)}</h3>
                   <p className="text-xs text-emerald-600 font-medium mt-1 flex items-center gap-1">
                     <TrendingUp className="w-3.5 h-3.5" /> +12.4% from last week
                   </p>
@@ -381,8 +382,8 @@ export const AdminPanel: React.FC = () => {
               <div className="bg-white p-5 rounded-xl shadow-sm border border-gray-200 flex items-start justify-between">
                 <div>
                   <p className="text-xs font-medium text-gray-500 uppercase tracking-wide">Total Orders</p>
-                  <h3 className="text-2xl font-bold text-gray-900 mt-1">{totalOrdersCount}</h3>
-                  <p className="text-xs text-gray-500 mt-1">Avg Order Value: ৳{avgOrderValue.toLocaleString()}</p>
+                  <h3 className="text-2xl font-bold text-gray-900 mt-1">{toBanglaDigits(totalOrdersCount)}</h3>
+                  <p className="text-xs text-gray-500 mt-1">Avg Order Value: ৳{toBanglaDigits(avgOrderValue)}</p>
                 </div>
                 <div className="p-3 bg-blue-50 text-blue-600 rounded-lg">
                   <ShoppingBag className="w-6 h-6" />
@@ -443,7 +444,7 @@ export const AdminPanel: React.FC = () => {
                         </div>
 
                         <div className="flex items-center gap-4">
-                          <span className="font-bold text-gray-900">৳{ord.total.toLocaleString()}</span>
+                          <span className="font-bold text-gray-900">৳{toBanglaDigits(ord.total)}</span>
                           <span
                             className={`px-2 py-0.5 rounded-full font-semibold capitalize text-[10px] ${
                               ord.status === 'delivered'
@@ -609,10 +610,10 @@ export const AdminPanel: React.FC = () => {
                             </span>
                           </td>
                           <td className="py-3 px-4 font-bold text-gray-900">
-                            ৳{product.price.toLocaleString()}
+                            ৳{toBanglaDigits(product.price)}
                             {product.originalPrice && (
                               <span className="block text-[10px] text-gray-400 line-through font-normal">
-                                ৳{product.originalPrice.toLocaleString()}
+                                ৳{toBanglaDigits(product.originalPrice)}
                               </span>
                             )}
                           </td>
@@ -778,9 +779,9 @@ export const AdminPanel: React.FC = () => {
                         </td>
                         <td className="py-3.5 px-4 font-semibold text-gray-800">
                           <div>
-                            <span>{usr.ordersCount} Orders</span>
+                            <span>{toBanglaDigits(usr.ordersCount)} Orders</span>
                             <span className="block text-emerald-700 font-bold">
-                              ৳{usr.totalSpent.toLocaleString()}
+                              ৳{toBanglaDigits(usr.totalSpent)}
                             </span>
                           </div>
                         </td>
@@ -869,7 +870,7 @@ export const AdminPanel: React.FC = () => {
                             </div>
                           </td>
                           <td className="py-3 px-4 font-bold text-gray-900">
-                            ৳{ord.total.toLocaleString()}
+                            ৳{toBanglaDigits(ord.total)}
                             <span className="block text-[10px] text-gray-400 font-normal uppercase">
                               {ord.deliverySpeed} shipping
                             </span>

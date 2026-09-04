@@ -14,6 +14,7 @@ import {
   ThumbsUp
 } from 'lucide-react';
 import { useShop } from '../context/ShopContext';
+import { toBanglaDigits } from '../utils/formatters';
 import { Product } from '../types';
 
 export const ProductDetailPage: React.FC = () => {
@@ -195,13 +196,13 @@ export const ProductDetailPage: React.FC = () => {
               )}
               <div className="flex items-baseline text-gray-900">
                 <span className="text-lg font-bold mr-0.5">৳</span>
-                <span className="text-3xl font-black leading-none">{p.price.toLocaleString()}</span>
+                <span className="text-3xl font-black leading-none">{toBanglaDigits(p.price)}</span>
               </div>
             </div>
 
             {p.originalPrice && p.originalPrice > p.price && (
               <div className="text-xs text-gray-500">
-                Typical price: <span className="line-through">৳{p.originalPrice.toLocaleString()}</span>
+                Typical price: <span className="line-through">৳{toBanglaDigits(p.originalPrice)}</span>
               </div>
             )}
 
@@ -231,7 +232,7 @@ export const ProductDetailPage: React.FC = () => {
                           : 'border-gray-300 hover:border-gray-500 bg-white text-gray-700'
                       }`}
                     >
-                      {v.name} {v.priceModifier ? `(+৳${v.priceModifier})` : ''}
+                      {v.name} {v.priceModifier ? `(+৳${toBanglaDigits(v.priceModifier)})` : ''}
                     </button>
                   );
                 })}
@@ -271,7 +272,7 @@ export const ProductDetailPage: React.FC = () => {
             {/* Price in Buy Box */}
             <div className="flex items-baseline text-gray-900">
               <span className="text-base font-bold mr-0.5">৳</span>
-              <span className="text-2xl font-black leading-none">{p.price.toLocaleString()}</span>
+              <span className="text-2xl font-black leading-none">{toBanglaDigits(p.price)}</span>
             </div>
 
             {/* Delivery Info */}

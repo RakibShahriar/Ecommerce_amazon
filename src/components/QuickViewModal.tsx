@@ -2,6 +2,7 @@ import React from 'react';
 import { X, Star, ShoppingCart, Check, ShieldCheck, Heart } from 'lucide-react';
 import { Product } from '../types';
 import { useShop } from '../context/ShopContext';
+import { toBanglaDigits } from '../utils/formatters';
 
 interface QuickViewModalProps {
   product: Product;
@@ -77,10 +78,10 @@ export const QuickViewModal: React.FC<QuickViewModalProps> = ({ product, onClose
 
             {/* Price */}
             <div className="flex items-baseline gap-2">
-              <span className="text-2xl font-black text-gray-900">৳{product.price.toLocaleString()}</span>
+              <span className="text-2xl font-black text-gray-900">৳{toBanglaDigits(product.price)}</span>
               {product.originalPrice && (
                 <span className="text-sm text-gray-500 line-through">
-                  ৳{product.originalPrice.toLocaleString()}
+                  ৳{toBanglaDigits(product.originalPrice)}
                 </span>
               )}
             </div>

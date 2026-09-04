@@ -3,6 +3,7 @@ import { ChevronRight, ChevronLeft, Sparkles, SlidersHorizontal } from 'lucide-r
 import { HOME_CARDS, MOCK_PRODUCTS } from '../data/mockProducts';
 import { ProductCard } from './ProductCard';
 import { useShop } from '../context/ShopContext';
+import { toBanglaDigits } from '../utils/formatters';
 import { Product } from '../types';
 import { QuickViewModal } from './QuickViewModal';
 
@@ -147,7 +148,7 @@ export const HomeFeed: React.FC = () => {
                 onClick={() => handleSectionClick(itemCategory)}
                 className="text-xs font-bold text-[#007185] hover:text-[#c7511f] hover:underline flex items-center gap-0.5"
               >
-                সব দেখুন ({itemProducts.length}) <ChevronRight className="w-4 h-4" />
+                সব দেখুন ({toBanglaDigits(itemProducts.length)}) <ChevronRight className="w-4 h-4" />
               </button>
             </div>
 

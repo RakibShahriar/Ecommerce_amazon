@@ -91,11 +91,11 @@ export const Footer: React.FC = () => {
               <span>English</span>
             </div>
             <div className="border border-gray-500 rounded px-3 py-1.5 flex items-center gap-1.5 hover:border-white cursor-pointer">
-              <DollarSign className="w-3.5 h-3.5" />
-              <span>USD - U.S. Dollar</span>
+              <span className="font-bold text-amber-400 text-sm">৳</span>
+              <span>BDT - বাংলাদেশী টাকা</span>
             </div>
             <div className="border border-gray-500 rounded px-3 py-1.5 flex items-center gap-1.5 hover:border-white cursor-pointer">
-              <span>🇺🇸 United States</span>
+              <span>🇧🇩 Bangladesh</span>
             </div>
           </div>
         </div>

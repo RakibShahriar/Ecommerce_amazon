@@ -1,6 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { Search, ShoppingCart, MapPin, ChevronDown, User, Heart, Package, X, ArrowRight, LogIn, LogOut, ShieldCheck } from 'lucide-react';
 import { useShop } from '../context/ShopContext';
+import { toBanglaDigits } from '../utils/formatters';
 import { DEPARTMENTS, SEARCH_SUGGESTIONS } from '../data/mockProducts';
 
 export const Header: React.FC = () => {
@@ -364,7 +365,7 @@ export const Header: React.FC = () => {
               <div className="relative flex items-center">
                 <ShoppingCart className="w-7 h-7 sm:w-8 sm:h-8 text-white group-hover:text-amber-400 transition" />
                 <span className="absolute -top-1 left-3 bg-[#f08804] text-[#111] text-[11px] font-black rounded-full px-1.5 py-0.2 min-w-[18px] text-center leading-tight shadow-sm">
-                  {cartCount}
+                  {toBanglaDigits(cartCount)}
                 </span>
               </div>
               <span className="font-bold text-xs text-white hidden md:inline ml-1 mb-0.5">
