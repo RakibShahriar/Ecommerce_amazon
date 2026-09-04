@@ -124,6 +124,30 @@ const DEFAULT_PAYMENT: PaymentMethod = {
 
 const ShopContext = createContext<ShopContextType | undefined>(undefined);
 
+const getViewFromPath = (path: string): ActiveView => {
+  const cleaned = path.toLowerCase().replace(/\/$/, '');
+  if (cleaned === '/admin') return 'admin';
+  if (cleaned === '/cart') return 'cart';
+  if (cleaned === '/checkout') return 'checkout';
+  if (cleaned === '/orders') return 'orders';
+  if (cleaned === '/search') return 'search';
+  if (cleaned === '/product') return 'product_detail';
+  return 'home';
+};
+
+const getPathFromView = (view: ActiveView): string => {
+  const pathMap: Record<ActiveView, string> = {
+    home: '/',
+    search: '/search',
+    product_detail: '/product',
+    cart: '/cart',
+    checkout: '/checkout',
+    orders: '/orders',
+    admin: '/admin',
+  };
+  return pathMap[view] || '/';
+};
+
 export const ShopProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [products, setProducts] = useState<Product[]>(() => {
     try {
@@ -142,7 +166,35 @@ export const ShopProvider: React.FC<{ children: React.ReactNode }> = ({ children
     return MOCK_PRODUCTS;
   });
   const [selectedProductId, setSelectedProductId] = useState<string | null>(null);
-  const [activeView, setActiveView] = useState<ActiveView>('home');
+  
+  // View Routing State synchronized with window.location.pathname
+  const [activeView, setActiveViewRaw] = useState<ActiveView>(() => {
+    if (typeof window !== 'undefined') {
+      return getViewFromPath(window.location.pathname);
+    }
+    return 'home';
+  });
+
+  const setActiveView = (view: ActiveView) => {
+    setActiveViewRaw(view);
+    if (typeof window !== 'undefined') {
+      const targetPath = getPathFromView(view);
+      if (window.location.pathname !== targetPath) {
+        window.history.pushState({ view }, '', targetPath);
+      }
+    }
+  };
+
+  useEffect(() => {
+    const handlePopState = () => {
+      if (typeof window !== 'undefined') {
+        const view = getViewFromPath(window.location.pathname);
+        setActiveViewRaw(view);
+      }
+    };
+    window.addEventListener('popstate', handlePopState);
+    return () => window.removeEventListener('popstate', handlePopState);
+  }, []);
   
   // Cart state stored locally
   const [cart, setCart] = useState<CartItem[]>(() => {

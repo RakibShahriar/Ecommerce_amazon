@@ -191,9 +191,9 @@ export const AdminPanel: React.FC = () => {
             <div className="w-16 h-16 bg-amber-500/10 rounded-2xl border border-amber-500/30 flex items-center justify-center mx-auto text-amber-400">
               <Lock className="w-8 h-8" />
             </div>
-            <h2 className="text-2xl font-black tracking-tight text-white">Merchant Seller Central</h2>
-            <p className="text-xs text-gray-400">
-              Protected Admin Portal. Server-side authentication passkey required to manage store inventory, orders, and user access.
+            <h2 className="text-2xl font-black tracking-tight text-white">সিকিউর্ড অ্যাডমিন প্যানেল (Seller Central)</h2>
+            <p className="text-xs text-gray-300 leading-relaxed">
+              সুরক্ষিত অ্যাডমিন ড্যাশবোর্ড। স্টোর ইনভেন্টরি, অর্ডার ট্র্যাকিং এবং কাস্টমার ডেটা নিয়ন্ত্রণের জন্য সিকিউরড অ্যাডমিন পিন বা পাস-কি প্রদান করুন।
             </p>
           </div>
 
@@ -206,8 +206,8 @@ export const AdminPanel: React.FC = () => {
 
             <div>
               <label className="block text-xs font-bold text-amber-300 mb-1.5 flex items-center justify-between">
-                <span>Enter Admin PIN or Passkey</span>
-                <span className="text-[11px] text-gray-400 font-normal">Default PIN: 1234</span>
+                <span>অ্যাডমিন পিন (PIN) বা পাস-কি লিখুন</span>
+                <span className="text-[11px] text-gray-400 font-normal">ডিফল্ট PIN: 1234</span>
               </label>
               <div className="relative">
                 <KeyRound className="w-4 h-4 text-amber-400 absolute left-3 top-3.5" />
@@ -230,14 +230,14 @@ export const AdminPanel: React.FC = () => {
                 }}
                 className="text-amber-400 font-bold hover:underline"
               >
-                ⚡ Auto-fill Demo PIN (1234)
+                ⚡ ডেমো পিন অটো-ফিল করুন (1234)
               </button>
               <button
                 type="button"
                 onClick={() => setActiveView('home')}
                 className="text-gray-400 hover:text-white"
               >
-                Return to Store
+                স্টোরে ফিরে যান
               </button>
             </div>
 
@@ -245,7 +245,7 @@ export const AdminPanel: React.FC = () => {
               type="submit"
               className="w-full py-3 bg-gradient-to-r from-amber-400 to-amber-500 hover:from-amber-500 hover:to-amber-600 text-gray-950 font-black rounded-xl shadow-lg transition flex items-center justify-center gap-2 text-sm"
             >
-              <ShieldCheck className="w-4 h-4" /> Unlock Seller Central
+              <ShieldCheck className="w-4 h-4" /> আনলক অ্যাডমিন ড্যাশবোর্ড
             </button>
           </form>
         </div>
